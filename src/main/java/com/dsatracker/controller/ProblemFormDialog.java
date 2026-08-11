@@ -42,7 +42,13 @@ final class ProblemFormDialog extends Dialog<ProblemFormDialog.Result> {
     private final TextArea notesArea = new TextArea();
     private final Label errorLabel = new Label();
 
-    ProblemFormDialog(final ThemeManager themeManager, final List<Topic> topics, final Problem existing) {
+    /**
+     * @param defaultTopic pre-selected topic for a new problem (e.g. opened from that topic's
+     *                      Roadmap detail page); ignored when {@code existing} is not {@code null},
+     *                      and falls back to the first topic when {@code null} or not in {@code topics}
+     */
+    ProblemFormDialog(final ThemeManager themeManager, final List<Topic> topics, final Problem existing,
+                       final Topic defaultTopic) {
         setTitle(existing == null ? "Add Problem" : "Edit Problem");
         getDialogPane().getStylesheets().add(
                 getClass().getResource(themeManager.getStylesheetPath()).toExternalForm());
@@ -62,7 +68,9 @@ final class ProblemFormDialog extends Dialog<ProblemFormDialog.Result> {
             if (!platformCombo.getItems().isEmpty()) {
                 platformCombo.getSelectionModel().selectFirst();
             }
-            if (!topics.isEmpty()) {
+            if (defaultTopic != null && topics.contains(defaultTopic)) {
+                topicCombo.setValue(defaultTopic);
+            } else if (!topics.isEmpty()) {
                 topicCombo.getSelectionModel().selectFirst();
             }
             if (!difficultyCombo.getItems().isEmpty()) {

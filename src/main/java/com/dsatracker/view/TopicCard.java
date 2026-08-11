@@ -3,16 +3,22 @@ package com.dsatracker.view;
 import com.dsatracker.model.Topic;
 import com.dsatracker.model.enums.TopicStatus;
 import com.dsatracker.service.TopicProgress;
+import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
 
-/** A roadmap tile: topic name, difficulty/status badges, description, and a solved/total progress bar. */
+/**
+ * A roadmap tile: topic name, difficulty/status badges, description, and a solved/total progress
+ * bar. Clicking it (anywhere on the card) opens that topic's detail page.
+ */
 public final class TopicCard extends Card {
 
-    public TopicCard(final TopicProgress topicProgress) {
+    public TopicCard(final TopicProgress topicProgress, final Runnable onOpen) {
         getStyleClass().add("topic-card");
         setPrefWidth(280);
+        setCursor(Cursor.HAND);
+        setOnMouseClicked(event -> onOpen.run());
 
         final Topic topic = topicProgress.topic();
 

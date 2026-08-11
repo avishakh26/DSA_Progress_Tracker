@@ -120,7 +120,7 @@ public final class AppContext {
                 return new DashboardController(dashboardService);
             }
             if (controllerClass == RoadmapController.class) {
-                return new RoadmapController(topicService);
+                return new RoadmapController(topicService, problemService, themeManager);
             }
             if (controllerClass == ProblemsController.class) {
                 return new ProblemsController(problemService, topicService, themeManager);

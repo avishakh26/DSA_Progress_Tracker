@@ -205,7 +205,7 @@ public final class ProblemsController implements Refreshable {
             AlertHelper.showWarning("No Topics", "Add a topic to the roadmap before adding problems.");
             return;
         }
-        new ProblemFormDialog(themeManager, topics, null).showAndWait().ifPresent(result -> {
+        new ProblemFormDialog(themeManager, topics, null, null).showAndWait().ifPresent(result -> {
             try {
                 problemService.addProblem(result.title(), result.platform(), result.url(), result.topicId(),
                         result.difficulty(), result.notes());
@@ -220,7 +220,7 @@ public final class ProblemsController implements Refreshable {
         if (problem == null) {
             return;
         }
-        new ProblemFormDialog(themeManager, topicService.getAllTopics(), problem).showAndWait().ifPresent(result -> {
+        new ProblemFormDialog(themeManager, topicService.getAllTopics(), problem, null).showAndWait().ifPresent(result -> {
             try {
                 problem.setTitle(result.title());
                 problem.setPlatform(result.platform());
