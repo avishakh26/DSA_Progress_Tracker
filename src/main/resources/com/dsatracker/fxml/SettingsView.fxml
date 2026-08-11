@@ -16,13 +16,10 @@
             <Label text="Appearance and data management." styleClass="page-subtitle"/>
         </VBox>
 
-        <VBox spacing="12" styleClass="card" maxWidth="480">
+        <VBox spacing="12" styleClass="card" maxWidth="620">
             <Label text="Appearance" styleClass="section-title"/>
             <Label text="Choose the theme used across the whole app." styleClass="page-subtitle" wrapText="true"/>
-            <HBox spacing="10">
-                <Button fx:id="darkThemeButton" text="Dark" onAction="#onSelectDarkTheme"/>
-                <Button fx:id="lightThemeButton" text="Light" onAction="#onSelectLightTheme"/>
-            </HBox>
+            <HBox fx:id="themeRow" spacing="12"/>
         </VBox>
 
         <VBox spacing="12" styleClass="card" maxWidth="480">

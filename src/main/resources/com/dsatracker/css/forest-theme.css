@@ -1,25 +1,25 @@
 /* =====================================================================
-   DSA Progress Tracker - Light Theme
-   Mirrors dark-theme.css rule-for-rule; only the design tokens on .root
-   and a couple of hover directions (light surfaces get darker on hover,
-   not lighter) differ.
+   DSA Progress Tracker - Forest Theme
+   Mirrors dark-theme.css rule-for-rule (same dark-family hover direction);
+   only the design tokens on .root differ, built from a pine/sage palette:
+   051F20 / 0B2B26 / 163832 / 235347 / 8EB69B / DAF1DE.
    ===================================================================== */
 
 .root {
-    -fx-bg-base:      #F5F6FA;   /* app background            */
-    -fx-bg-surface:   #FFFFFF;   /* cards, sidebar            */
-    -fx-bg-elevated:  #ECEFF5;   /* hover / raised surfaces   */
-    -fx-border-subtle:#DCE0EA;
+    -fx-bg-base:      #051F20;   /* app background            */
+    -fx-bg-surface:   #0B2B26;   /* cards, sidebar            */
+    -fx-bg-elevated:  #163832;   /* hover / raised surfaces   */
+    -fx-border-subtle:#235347;
 
-    -fx-text-primary:   #1B1F2A;
-    -fx-text-secondary: #5B6478;
-    -fx-text-muted:     #8A93A6;
+    -fx-text-primary:   #DAF1DE;
+    -fx-text-secondary: #8EB69B;
+    -fx-text-muted:     #5F8A75;
 
-    -fx-accent:        #3B5BDB;  /* primary brand / active nav */
-    -fx-accent-hover:  #2F49B0;
-    -fx-success:       #2F9E44;  /* Easy   / solved            */
-    -fx-warning:       #A6790A;  /* Medium / in progress       */
-    -fx-danger:        #E03131;  /* Hard   / destructive       */
+    -fx-accent:        #8EB69B;  /* primary brand / active nav */
+    -fx-accent-hover:  #A3C7AF;
+    -fx-success:       #3FB950;  /* Easy   / solved            */
+    -fx-warning:       #D29922;  /* Medium / in progress       */
+    -fx-danger:        #F85149;  /* Hard   / destructive       */
 
     -fx-background-color: -fx-bg-base;
     -fx-font-family: "Segoe UI", "Inter", "SF Pro Text", sans-serif;
@@ -38,7 +38,7 @@
     -fx-border-color: -fx-border-subtle;
     -fx-border-radius: 14;
     -fx-border-width: 1;
-    -fx-effect: dropshadow(gaussian, rgba(16, 24, 40, 0.08), 18, 0, 0, 6);
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.35), 18, 0, 0, 6);
 }
 
 .card:hover {
@@ -219,17 +219,17 @@
 }
 
 .badge.difficulty-easy {
-    -fx-background-color: rgba(47, 158, 68, 0.14);
+    -fx-background-color: rgba(63, 185, 80, 0.18);
     -fx-text-fill: -fx-success;
 }
 
 .badge.difficulty-medium {
-    -fx-background-color: rgba(166, 121, 10, 0.14);
+    -fx-background-color: rgba(210, 153, 34, 0.18);
     -fx-text-fill: -fx-warning;
 }
 
 .badge.difficulty-hard {
-    -fx-background-color: rgba(224, 49, 49, 0.14);
+    -fx-background-color: rgba(248, 81, 73, 0.18);
     -fx-text-fill: -fx-danger;
 }
 
@@ -239,12 +239,12 @@
 }
 
 .badge.status-in-progress {
-    -fx-background-color: rgba(59, 91, 219, 0.14);
+    -fx-background-color: rgba(142, 182, 155, 0.25);
     -fx-text-fill: -fx-accent;
 }
 
 .badge.status-completed {
-    -fx-background-color: rgba(47, 158, 68, 0.14);
+    -fx-background-color: rgba(63, 185, 80, 0.18);
     -fx-text-fill: -fx-success;
 }
 
@@ -266,7 +266,7 @@
 }
 
 .badge.status-attempted {
-    -fx-background-color: rgba(166, 121, 10, 0.14);
+    -fx-background-color: rgba(210, 153, 34, 0.18);
     -fx-text-fill: -fx-warning;
 }
 
@@ -355,7 +355,7 @@
 }
 
 .button:hover {
-    -fx-background-color: derive(-fx-bg-elevated, -8%);
+    -fx-background-color: derive(-fx-bg-elevated, 15%);
 }
 
 .primary-button {
@@ -375,7 +375,7 @@
 }
 
 .danger-button:hover {
-    -fx-background-color: derive(-fx-danger, -15%);
+    -fx-background-color: derive(-fx-danger, 15%);
 }
 
 .table-action-button {
@@ -398,7 +398,7 @@
 }
 
 .table-action-solve {
-    -fx-background-color: rgba(47, 158, 68, 0.14);
+    -fx-background-color: rgba(63, 185, 80, 0.18);
 }
 
 .table-action-solve .table-action-icon {
@@ -406,7 +406,7 @@
 }
 
 .table-action-delete {
-    -fx-background-color: rgba(224, 49, 49, 0.14);
+    -fx-background-color: rgba(248, 81, 73, 0.18);
 }
 
 .table-action-delete .table-action-icon {
@@ -446,7 +446,7 @@
 }
 
 .table-row-cell:odd {
-    -fx-background-color: derive(-fx-bg-surface, -3%);
+    -fx-background-color: derive(-fx-bg-surface, 4%);
 }
 
 .table-row-cell:selected {
@@ -529,7 +529,7 @@
 
 .analytics-chart .default-color1.chart-pie,
 .analytics-chart .default-color1.chart-bar {
-    /* -fx-bg-elevated has too little contrast against the chart's own
+    /* -fx-bg-elevated is nearly invisible against the chart's own dark
        background - text-muted keeps "Unsolved" reading as secondary
        without disappearing, especially as a short bar next to a tall
        green one. */
@@ -553,15 +553,15 @@
 }
 
 .heatmap-level-1 {
-    -fx-background-color: rgba(47, 158, 68, 0.35);
+    -fx-background-color: rgba(63, 185, 80, 0.35);
 }
 
 .heatmap-level-2 {
-    -fx-background-color: rgba(47, 158, 68, 0.55);
+    -fx-background-color: rgba(63, 185, 80, 0.55);
 }
 
 .heatmap-level-3 {
-    -fx-background-color: rgba(47, 158, 68, 0.75);
+    -fx-background-color: rgba(63, 185, 80, 0.75);
 }
 
 .heatmap-level-4 {
@@ -615,7 +615,7 @@
 
 .theme-option:selected {
     -fx-border-color: -fx-accent;
-    -fx-background-color: derive(-fx-bg-elevated, -8%);
+    -fx-background-color: derive(-fx-bg-elevated, 12%);
 }
 
 .theme-option-label {

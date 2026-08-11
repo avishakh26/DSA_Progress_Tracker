@@ -20,7 +20,17 @@ import java.util.Properties;
 public final class ThemeManager {
 
     public enum Theme {
-        DARK, LIGHT
+        DARK(AppConstants.CSS_DARK_THEME),
+        LIGHT(AppConstants.CSS_LIGHT_THEME),
+        OCEAN(AppConstants.CSS_OCEAN_THEME),
+        FOREST(AppConstants.CSS_FOREST_THEME),
+        ROSE(AppConstants.CSS_ROSE_THEME);
+
+        private final String cssPath;
+
+        Theme(final String cssPath) {
+            this.cssPath = cssPath;
+        }
     }
 
     private static final Path SETTINGS_FILE = Path.of(AppConstants.DATA_DIRECTORY, "settings.properties");
@@ -45,7 +55,7 @@ public final class ThemeManager {
      * add/edit form - has to attach this explicitly instead of inheriting it from {@link #scene}.
      */
     public String getStylesheetPath() {
-        return currentTheme == Theme.DARK ? AppConstants.CSS_DARK_THEME : AppConstants.CSS_LIGHT_THEME;
+        return currentTheme.cssPath;
     }
 
     public void setTheme(final Theme theme) {
@@ -58,9 +68,8 @@ public final class ThemeManager {
     }
 
     private void apply(final Theme theme) {
-        final String cssPath = theme == Theme.DARK ? AppConstants.CSS_DARK_THEME : AppConstants.CSS_LIGHT_THEME;
         scene.getStylesheets().setAll(Objects.requireNonNull(
-                getClass().getResource(cssPath), "Missing theme stylesheet: " + cssPath).toExternalForm());
+                getClass().getResource(theme.cssPath), "Missing theme stylesheet: " + theme.cssPath).toExternalForm());
     }
 
     private Theme loadSavedTheme() {
