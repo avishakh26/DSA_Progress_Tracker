@@ -1,5 +1,6 @@
 package com.dsatracker.controller;
 
+import com.dsatracker.ThemeManager;
 import com.dsatracker.model.Note;
 import com.dsatracker.model.Topic;
 import com.dsatracker.service.NoteService;
@@ -23,6 +24,7 @@ public final class NotesController implements Refreshable {
 
     private final NoteService noteService;
     private final TopicService topicService;
+    private final ThemeManager themeManager;
 
     private Map<Integer, String> topicNamesById = Map.of();
 
@@ -38,9 +40,11 @@ public final class NotesController implements Refreshable {
     @FXML
     private Label emptyStateLabel;
 
-    public NotesController(final NoteService noteService, final TopicService topicService) {
+    public NotesController(final NoteService noteService, final TopicService topicService,
+                            final ThemeManager themeManager) {
         this.noteService = noteService;
         this.topicService = topicService;
+        this.themeManager = themeManager;
     }
 
     @FXML
@@ -99,7 +103,7 @@ public final class NotesController implements Refreshable {
 
     @FXML
     private void onAddNote() {
-        new NoteFormDialog(topicService.getAllTopics(), null).showAndWait().ifPresent(result -> {
+        new NoteFormDialog(themeManager, topicService.getAllTopics(), null).showAndWait().ifPresent(result -> {
             try {
                 noteService.createNote(result.title(), result.topicId(), result.content());
                 refresh();
@@ -110,7 +114,7 @@ public final class NotesController implements Refreshable {
     }
 
     private void onEditNote(final Note note) {
-        new NoteFormDialog(topicService.getAllTopics(), note).showAndWait().ifPresent(result -> {
+        new NoteFormDialog(themeManager, topicService.getAllTopics(), note).showAndWait().ifPresent(result -> {
             try {
                 note.setTitle(result.title());
                 note.setTopicId(result.topicId());

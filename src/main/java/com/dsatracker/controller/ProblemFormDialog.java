@@ -1,11 +1,11 @@
 package com.dsatracker.controller;
 
+import com.dsatracker.ThemeManager;
 import com.dsatracker.exception.ValidationException;
 import com.dsatracker.model.Problem;
 import com.dsatracker.model.Topic;
 import com.dsatracker.model.enums.Difficulty;
 import com.dsatracker.model.enums.Platform;
-import com.dsatracker.util.AppConstants;
 import com.dsatracker.util.Validator;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -42,10 +42,10 @@ final class ProblemFormDialog extends Dialog<ProblemFormDialog.Result> {
     private final TextArea notesArea = new TextArea();
     private final Label errorLabel = new Label();
 
-    ProblemFormDialog(final List<Topic> topics, final Problem existing) {
+    ProblemFormDialog(final ThemeManager themeManager, final List<Topic> topics, final Problem existing) {
         setTitle(existing == null ? "Add Problem" : "Edit Problem");
         getDialogPane().getStylesheets().add(
-                getClass().getResource(AppConstants.CSS_DARK_THEME).toExternalForm());
+                getClass().getResource(themeManager.getStylesheetPath()).toExternalForm());
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
         platformCombo.getItems().addAll(Platform.values());

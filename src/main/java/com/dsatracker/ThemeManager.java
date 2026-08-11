@@ -39,6 +39,15 @@ public final class ThemeManager {
         return currentTheme;
     }
 
+    /**
+     * Classpath location of the stylesheet for the current theme. Dialogs (Alert, Dialog) get
+     * their own Scene outside the main window's, so anything shown in one - a confirmation, an
+     * add/edit form - has to attach this explicitly instead of inheriting it from {@link #scene}.
+     */
+    public String getStylesheetPath() {
+        return currentTheme == Theme.DARK ? AppConstants.CSS_DARK_THEME : AppConstants.CSS_LIGHT_THEME;
+    }
+
     public void setTheme(final Theme theme) {
         if (theme == currentTheme) {
             return;

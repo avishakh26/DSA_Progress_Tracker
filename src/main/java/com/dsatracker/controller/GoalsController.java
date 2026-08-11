@@ -1,11 +1,11 @@
 package com.dsatracker.controller;
 
+import com.dsatracker.ThemeManager;
 import com.dsatracker.exception.ValidationException;
 import com.dsatracker.model.enums.GoalType;
 import com.dsatracker.service.GoalProgress;
 import com.dsatracker.service.GoalService;
 import com.dsatracker.util.AlertHelper;
-import com.dsatracker.util.AppConstants;
 import com.dsatracker.view.ProgressCard;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +17,7 @@ import java.util.Optional;
 public final class GoalsController implements Refreshable {
 
     private final GoalService goalService;
+    private final ThemeManager themeManager;
 
     @FXML
     private VBox dailyGoalContainer;
@@ -27,8 +28,9 @@ public final class GoalsController implements Refreshable {
     @FXML
     private VBox monthlyGoalContainer;
 
-    public GoalsController(final GoalService goalService) {
+    public GoalsController(final GoalService goalService, final ThemeManager themeManager) {
         this.goalService = goalService;
+        this.themeManager = themeManager;
     }
 
     @FXML
@@ -72,7 +74,7 @@ public final class GoalsController implements Refreshable {
         dialog.setHeaderText(null);
         dialog.setContentText("Target problems to solve:");
         dialog.getDialogPane().getStylesheets().add(
-                getClass().getResource(AppConstants.CSS_DARK_THEME).toExternalForm());
+                getClass().getResource(themeManager.getStylesheetPath()).toExternalForm());
 
         dialog.showAndWait().ifPresent(text -> {
             try {

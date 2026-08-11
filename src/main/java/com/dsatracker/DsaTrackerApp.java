@@ -9,6 +9,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -53,6 +54,10 @@ public class DsaTrackerApp extends Application {
         primaryStage.setTitle(AppConstants.APP_TITLE);
         primaryStage.setMinWidth(AppConstants.MIN_WINDOW_WIDTH);
         primaryStage.setMinHeight(AppConstants.MIN_WINDOW_HEIGHT);
+        for (final int size : AppConstants.APP_ICON_SIZES) {
+            primaryStage.getIcons().add(new Image(resource(AppConstants.APP_ICON_PATH_TEMPLATE.formatted(size))
+                    .toExternalForm()));
+        }
         primaryStage.setScene(scene);
         primaryStage.show();
     }

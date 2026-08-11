@@ -15,6 +15,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -159,7 +160,10 @@ public final class DatabaseManager {
     }
 
     private void runScript(final String classpathResource) throws IOException, SQLException {
-        final String sql = readResource(classpathResource);
+        String sql = readResource(classpathResource);
+        if (AppConstants.SQL_SEED.equals(classpathResource)) {
+            sql = withLocalSeedDates(sql);
+        }
         try (Statement statement = connection.createStatement()) {
             for (final String stmt : splitStatements(sql)) {
                 final String trimmed = stmt.trim();
@@ -168,6 +172,23 @@ public final class DatabaseManager {
                 }
             }
         }
+    }
+
+    /**
+     * seed.sql anchors its sample problems/goal/activity rows to "today" via SQLite's own
+     * {@code date('now', ...)}, which evaluates in UTC - but every other "today" in the app
+     * (repositories, services, {@code Problem}'s constructors) comes from Java's
+     * {@code LocalDate.now()} in the JVM's local timezone. Near local midnight the two clocks
+     * disagree on what day it is, so the seeded rows silently land a day off from what the app
+     * (and its tests) expect. Substituting literal, Java-computed dates here keeps the seed data
+     * anchored to the same "today" as everything that reads it.
+     */
+    private static String withLocalSeedDates(final String sql) {
+        final LocalDate today = LocalDate.now();
+        return sql
+                .replace("date('now', '-2 day')", "'" + today.minusDays(2) + "'")
+                .replace("date('now', '-1 day')", "'" + today.minusDays(1) + "'")
+                .replace("date('now')", "'" + today + "'");
     }
 
     /**

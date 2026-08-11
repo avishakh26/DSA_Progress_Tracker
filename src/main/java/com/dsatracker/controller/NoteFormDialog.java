@@ -1,9 +1,9 @@
 package com.dsatracker.controller;
 
+import com.dsatracker.ThemeManager;
 import com.dsatracker.exception.ValidationException;
 import com.dsatracker.model.Note;
 import com.dsatracker.model.Topic;
-import com.dsatracker.util.AppConstants;
 import com.dsatracker.util.Validator;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -36,10 +36,10 @@ final class NoteFormDialog extends Dialog<NoteFormDialog.Result> {
     private final TextArea contentArea = new TextArea();
     private final Label errorLabel = new Label();
 
-    NoteFormDialog(final List<Topic> topics, final Note existing) {
+    NoteFormDialog(final ThemeManager themeManager, final List<Topic> topics, final Note existing) {
         setTitle(existing == null ? "Add Note" : "Edit Note");
         getDialogPane().getStylesheets().add(
-                getClass().getResource(AppConstants.CSS_DARK_THEME).toExternalForm());
+                getClass().getResource(themeManager.getStylesheetPath()).toExternalForm());
         getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
 
         final List<Topic> topicItems = new ArrayList<>();

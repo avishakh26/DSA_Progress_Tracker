@@ -113,4 +113,4 @@ Covered by `DatabaseManagerTest` (JUnit 5) against an isolated in-memory databas
 - [x] **Step 8** — Problem Tracker UI
 - [x] **Step 9** — Analytics, charts & heatmap
 - [x] **Step 10** — Notes, Goals & Settings
-- [ ] Step 11 — Final polish
+- [x] **Step 11** — Final polish

@@ -29,6 +29,9 @@ public final class AppConstants {
     public static final String FXML_MAIN = "/com/dsatracker/fxml/MainView.fxml";
     public static final String CSS_DARK_THEME = "/com/dsatracker/css/dark-theme.css";
     public static final String CSS_LIGHT_THEME = "/com/dsatracker/css/light-theme.css";
+    /** Window/taskbar icon, provided at several sizes so the OS can pick the sharpest fit. */
+    public static final int[] APP_ICON_SIZES = {16, 24, 32, 48, 64, 128, 256};
+    public static final String APP_ICON_PATH_TEMPLATE = "/com/dsatracker/images/app-icon-%d.png";
 
     // ----- Window geometry -------------------------------------------------
     public static final double WINDOW_WIDTH = 1280;

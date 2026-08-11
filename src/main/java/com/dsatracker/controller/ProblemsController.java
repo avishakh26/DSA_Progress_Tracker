@@ -1,5 +1,6 @@
 package com.dsatracker.controller;
 
+import com.dsatracker.ThemeManager;
 import com.dsatracker.model.Problem;
 import com.dsatracker.model.Topic;
 import com.dsatracker.model.enums.Difficulty;
@@ -40,6 +41,7 @@ public final class ProblemsController implements Refreshable {
 
     private final ProblemService problemService;
     private final TopicService topicService;
+    private final ThemeManager themeManager;
 
     private final ObservableList<Problem> problemsData = FXCollections.observableArrayList();
     private Map<Integer, String> topicNamesById = Map.of();
@@ -89,9 +91,11 @@ public final class ProblemsController implements Refreshable {
     @FXML
     private TableColumn<Problem, Void> actionsColumn;
 
-    public ProblemsController(final ProblemService problemService, final TopicService topicService) {
+    public ProblemsController(final ProblemService problemService, final TopicService topicService,
+                               final ThemeManager themeManager) {
         this.problemService = problemService;
         this.topicService = topicService;
+        this.themeManager = themeManager;
     }
 
     @FXML
@@ -201,7 +205,7 @@ public final class ProblemsController implements Refreshable {
             AlertHelper.showWarning("No Topics", "Add a topic to the roadmap before adding problems.");
             return;
         }
-        new ProblemFormDialog(topics, null).showAndWait().ifPresent(result -> {
+        new ProblemFormDialog(themeManager, topics, null).showAndWait().ifPresent(result -> {
             try {
                 problemService.addProblem(result.title(), result.platform(), result.url(), result.topicId(),
                         result.difficulty(), result.notes());
@@ -216,7 +220,7 @@ public final class ProblemsController implements Refreshable {
         if (problem == null) {
             return;
         }
-        new ProblemFormDialog(topicService.getAllTopics(), problem).showAndWait().ifPresent(result -> {
+        new ProblemFormDialog(themeManager, topicService.getAllTopics(), problem).showAndWait().ifPresent(result -> {
             try {
                 problem.setTitle(result.title());
                 problem.setPlatform(result.platform());

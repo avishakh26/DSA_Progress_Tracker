@@ -123,16 +123,16 @@ public final class AppContext {
                 return new RoadmapController(topicService);
             }
             if (controllerClass == ProblemsController.class) {
-                return new ProblemsController(problemService, topicService);
+                return new ProblemsController(problemService, topicService, themeManager);
             }
             if (controllerClass == AnalyticsController.class) {
                 return new AnalyticsController(problemService, topicService, activityService);
             }
             if (controllerClass == NotesController.class) {
-                return new NotesController(noteService, topicService);
+                return new NotesController(noteService, topicService, themeManager);
             }
             if (controllerClass == GoalsController.class) {
-                return new GoalsController(goalService);
+                return new GoalsController(goalService, themeManager);
             }
             if (controllerClass == SettingsController.class) {
                 return new SettingsController(settingsService, themeManager);
