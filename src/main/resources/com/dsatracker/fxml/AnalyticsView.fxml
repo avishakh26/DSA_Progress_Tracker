@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fx:id="scrollPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dsatracker.controller.AnalyticsController"
+            fitToWidth="true" styleClass="content-scroll">
+    <VBox spacing="24" styleClass="page-root">
+
+        <VBox spacing="4">
+            <Label text="Analytics" styleClass="page-title"/>
+            <Label text="Charts, streaks and your contribution history." styleClass="page-subtitle"/>
+        </VBox>
+
+        <HBox fx:id="streakRow" spacing="16"/>
+
+        <HBox spacing="16">
+            <VBox fx:id="pieChartContainer" spacing="8" styleClass="card" HBox.hgrow="ALWAYS">
+                <Label text="Solved vs. Unsolved" styleClass="section-title-inline"/>
+            </VBox>
+            <VBox fx:id="barChartContainer" spacing="8" styleClass="card" HBox.hgrow="ALWAYS">
+                <Label text="Difficulty Distribution" styleClass="section-title-inline"/>
+            </VBox>
+        </HBox>
+
+        <VBox fx:id="heatmapContainer" spacing="10" styleClass="card">
+            <Label text="Activity Heatmap" styleClass="section-title-inline"/>
+        </VBox>
+
+        <VBox spacing="10" styleClass="card">
+            <Label text="Progress by Topic" styleClass="section-title-inline"/>
+            <VBox fx:id="topicProgressList" spacing="10"/>
+        </VBox>
+
+    </VBox>
+</ScrollPane>

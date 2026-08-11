@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dsatracker.controller.MainController"
+            styleClass="root-pane">
+
+    <left>
+        <VBox styleClass="sidebar" prefWidth="240" minWidth="240">
+            <padding>
+                <Insets top="24" right="16" bottom="24" left="16"/>
+            </padding>
+            <VBox spacing="2">
+                <Label text="DSA Progress Tracker" styleClass="brand-label" wrapText="true"/>
+                <Label text="Track. Practice. Progress." styleClass="brand-subtitle"/>
+            </VBox>
+            <VBox fx:id="navContainer" styleClass="nav-container" spacing="4">
+                <VBox.margin>
+                    <Insets top="32"/>
+                </VBox.margin>
+            </VBox>
+        </VBox>
+    </left>
+
+    <center>
+        <StackPane fx:id="contentArea" styleClass="content-area"/>
+    </center>
+
+</BorderPane>

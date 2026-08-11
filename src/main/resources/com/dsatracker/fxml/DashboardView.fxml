@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fx:id="scrollPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dsatracker.controller.DashboardController"
+            fitToWidth="true" styleClass="content-scroll">
+    <VBox spacing="24" styleClass="page-root">
+
+        <VBox spacing="4">
+            <Label text="Dashboard" styleClass="page-title"/>
+            <Label text="Your DSA practice at a glance." styleClass="page-subtitle"/>
+        </VBox>
+
+        <FlowPane fx:id="statGrid" hgap="16" vgap="16"/>
+
+        <VBox spacing="12">
+            <Label text="Difficulty Breakdown" styleClass="section-title"/>
+            <HBox fx:id="difficultyRow" spacing="16"/>
+        </VBox>
+
+        <HBox spacing="16">
+            <VBox fx:id="goalContainer" HBox.hgrow="ALWAYS" spacing="12"/>
+            <VBox HBox.hgrow="ALWAYS" spacing="8" styleClass="card">
+                <Label text="Recent Activity" styleClass="section-title-inline"/>
+                <VBox fx:id="recentActivityList" spacing="6"/>
+                <Label fx:id="recentActivityEmptyLabel" text="No solved problems yet - go solve one!"
+                       styleClass="subtitle-label" managed="false" visible="false" wrapText="true"/>
+            </VBox>
+        </HBox>
+
+    </VBox>
+</ScrollPane>

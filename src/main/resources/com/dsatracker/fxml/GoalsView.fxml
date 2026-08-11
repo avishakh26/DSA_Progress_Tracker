@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fx:id="scrollPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dsatracker.controller.GoalsController"
+            fitToWidth="true" styleClass="content-scroll">
+    <VBox spacing="24" styleClass="page-root">
+
+        <VBox spacing="4">
+            <Label text="Goals" styleClass="page-title"/>
+            <Label text="Set and track your daily, weekly and monthly targets." styleClass="page-subtitle"/>
+        </VBox>
+
+        <HBox spacing="16">
+            <VBox fx:id="dailyGoalContainer" spacing="12" styleClass="card" HBox.hgrow="ALWAYS"/>
+            <VBox fx:id="weeklyGoalContainer" spacing="12" styleClass="card" HBox.hgrow="ALWAYS"/>
+            <VBox fx:id="monthlyGoalContainer" spacing="12" styleClass="card" HBox.hgrow="ALWAYS"/>
+        </HBox>
+
+    </VBox>
+</ScrollPane>
