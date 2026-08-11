@@ -1,0 +1,599 @@
+/* =====================================================================
+   DSA Progress Tracker - Light Theme
+   Mirrors dark-theme.css rule-for-rule; only the design tokens on .root
+   and a couple of hover directions (light surfaces get darker on hover,
+   not lighter) differ.
+   ===================================================================== */
+
+.root {
+    -fx-bg-base:      #F5F6FA;   /* app background            */
+    -fx-bg-surface:   #FFFFFF;   /* cards, sidebar            */
+    -fx-bg-elevated:  #ECEFF5;   /* hover / raised surfaces   */
+    -fx-border-subtle:#DCE0EA;
+
+    -fx-text-primary:   #1B1F2A;
+    -fx-text-secondary: #5B6478;
+    -fx-text-muted:     #8A93A6;
+
+    -fx-accent:        #3B5BDB;  /* primary brand / active nav */
+    -fx-accent-hover:  #2F49B0;
+    -fx-success:       #2F9E44;  /* Easy   / solved            */
+    -fx-warning:       #A6790A;  /* Medium / in progress       */
+    -fx-danger:        #E03131;  /* Hard   / destructive       */
+
+    -fx-background-color: -fx-bg-base;
+    -fx-font-family: "Segoe UI", "Inter", "SF Pro Text", sans-serif;
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.root-pane {
+    -fx-background-color: -fx-bg-base;
+}
+
+/* ----- Cards ---------------------------------------------------------- */
+.card {
+    -fx-background-color: -fx-bg-surface;
+    -fx-background-radius: 14;
+    -fx-border-color: -fx-border-subtle;
+    -fx-border-radius: 14;
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(16, 24, 40, 0.08), 18, 0, 0, 6);
+}
+
+.card:hover {
+    -fx-border-color: -fx-accent;
+}
+
+/* ----- Typography ----------------------------------------------------- */
+.title-label {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.subtitle-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.label {
+    -fx-text-fill: -fx-text-primary;
+}
+
+/* ----- Sidebar ---------------------------------------------------------- */
+.sidebar {
+    -fx-background-color: -fx-bg-surface;
+    -fx-border-color: -fx-border-subtle;
+    -fx-border-width: 0 1 0 0;
+}
+
+.brand-label {
+    -fx-font-size: 17px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.brand-subtitle {
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-text-muted;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: -fx-text-secondary;
+    -fx-font-size: 13px;
+    -fx-padding: 10 14;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-alignment: CENTER_LEFT;
+    -fx-graphic-text-gap: 12;
+}
+
+.nav-button:hover {
+    -fx-background-color: -fx-bg-elevated;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.nav-button-active {
+    -fx-background-color: -fx-accent;
+    -fx-text-fill: white;
+}
+
+.nav-icon {
+    -fx-icon-size: 15;
+    -fx-icon-color: -fx-text-secondary;
+}
+
+.nav-button:hover .nav-icon {
+    -fx-icon-color: -fx-text-primary;
+}
+
+.nav-button-active .nav-icon {
+    -fx-icon-color: white;
+}
+
+/* ----- Routed content area ----------------------------------------------- */
+.content-area {
+    -fx-background-color: -fx-bg-base;
+    -fx-padding: 24;
+}
+
+/* A bare ScrollPane paints an opaque default background over its viewport;
+   without this every routed page shows a mismatched box behind its content. */
+.content-scroll,
+.content-scroll > .viewport {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.page-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.page-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.section-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.section-title-inline {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+    -fx-padding: 0 0 4 0;
+}
+
+/* ----- Stat cards --------------------------------------------------------- */
+.stat-card {
+    -fx-pref-width: 190;
+}
+
+.stat-icon-wrap {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.stat-icon {
+    -fx-icon-size: 18;
+    -fx-icon-color: -fx-accent;
+}
+
+.stat-value {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.stat-title {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.stat-card-easy .stat-icon {
+    -fx-icon-color: -fx-success;
+}
+
+.stat-card-medium .stat-icon {
+    -fx-icon-color: -fx-warning;
+}
+
+.stat-card-hard .stat-icon {
+    -fx-icon-color: -fx-danger;
+}
+
+/* ----- Progress card (today's goal, per-topic progress) ------------------- */
+.progress-card-title {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.progress-card-bar {
+    -fx-pref-height: 10;
+}
+
+.progress-card-fraction {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+/* ----- Recent activity feed ------------------------------------------------ */
+.activity-item {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+/* ----- Badges (difficulty / status pills) ---------------------------------- */
+.badge {
+    -fx-padding: 3 10;
+    -fx-background-radius: 999;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.badge.difficulty-easy {
+    -fx-background-color: rgba(47, 158, 68, 0.14);
+    -fx-text-fill: -fx-success;
+}
+
+.badge.difficulty-medium {
+    -fx-background-color: rgba(166, 121, 10, 0.14);
+    -fx-text-fill: -fx-warning;
+}
+
+.badge.difficulty-hard {
+    -fx-background-color: rgba(224, 49, 49, 0.14);
+    -fx-text-fill: -fx-danger;
+}
+
+.badge.status-not-started {
+    -fx-background-color: -fx-bg-elevated;
+    -fx-text-fill: -fx-text-muted;
+}
+
+.badge.status-in-progress {
+    -fx-background-color: rgba(59, 91, 219, 0.14);
+    -fx-text-fill: -fx-accent;
+}
+
+.badge.status-completed {
+    -fx-background-color: rgba(47, 158, 68, 0.14);
+    -fx-text-fill: -fx-success;
+}
+
+/* ----- Roadmap topic cards -------------------------------------------------- */
+.topic-card-name {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.topic-card-description {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.topic-card-count {
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-text-muted;
+}
+
+.badge.status-attempted {
+    -fx-background-color: rgba(166, 121, 10, 0.14);
+    -fx-text-fill: -fx-warning;
+}
+
+/* ----- Form controls (text fields, combo boxes) ----------------------------- */
+.text-field,
+.text-area {
+    -fx-background-color: -fx-bg-elevated;
+    -fx-text-fill: -fx-text-primary;
+    -fx-prompt-text-fill: -fx-text-muted;
+    -fx-background-radius: 8;
+    -fx-border-color: -fx-border-subtle;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-padding: 6 10;
+}
+
+.text-field:focused,
+.text-area:focused {
+    -fx-border-color: -fx-accent;
+}
+
+.text-area .content {
+    -fx-background-color: -fx-bg-elevated;
+    -fx-background-radius: 8;
+}
+
+.combo-box {
+    -fx-background-color: -fx-bg-elevated;
+    -fx-background-radius: 8;
+    -fx-border-color: -fx-border-subtle;
+    -fx-border-radius: 8;
+    -fx-border-width: 1;
+    -fx-mark-color: -fx-text-secondary;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: -fx-text-primary;
+    -fx-background-color: transparent;
+    -fx-padding: 5 8;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: -fx-bg-surface;
+    -fx-border-color: -fx-border-subtle;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: -fx-bg-elevated;
+}
+
+.combo-box-popup .list-view .list-cell:filled:selected {
+    -fx-background-color: -fx-accent;
+    -fx-text-fill: white;
+}
+
+/* ----- Progress bars (Dashboard goal, Roadmap/Analytics topic progress) -------- */
+/* Without this, JavaFX's default Modena track renders as a bright light-gray bar,
+   making filled vs. unfilled nearly indistinguishable against the dark theme. */
+.progress-bar {
+    -fx-background-color: transparent;
+}
+
+.progress-bar > .track {
+    -fx-background-color: -fx-bg-elevated;
+    -fx-background-radius: 999;
+    -fx-border-color: -fx-border-subtle;
+    -fx-border-radius: 999;
+    -fx-border-width: 1;
+}
+
+.progress-bar > .bar {
+    -fx-background-color: -fx-accent;
+    -fx-background-radius: 999;
+    -fx-background-insets: 0;
+    -fx-padding: 0.25em;
+}
+
+/* ----- Buttons ---------------------------------------------------------------- */
+.button {
+    -fx-background-color: -fx-bg-elevated;
+    -fx-text-fill: -fx-text-primary;
+    -fx-background-radius: 8;
+    -fx-padding: 7 14;
+    -fx-cursor: hand;
+    -fx-font-size: 12px;
+}
+
+.button:hover {
+    -fx-background-color: derive(-fx-bg-elevated, -8%);
+}
+
+.primary-button {
+    -fx-background-color: -fx-accent;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.primary-button:hover {
+    -fx-background-color: -fx-accent-hover;
+}
+
+.danger-button {
+    -fx-background-color: -fx-danger;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.danger-button:hover {
+    -fx-background-color: derive(-fx-danger, -15%);
+}
+
+.table-action-button {
+    -fx-padding: 5;
+    -fx-min-width: 26;
+    -fx-min-height: 26;
+    -fx-max-width: 26;
+    -fx-max-height: 26;
+    -fx-background-color: -fx-bg-elevated;
+    -fx-background-radius: 6;
+}
+
+.table-action-button:disabled {
+    -fx-opacity: 0.35;
+}
+
+.table-action-icon {
+    -fx-icon-size: 13;
+    -fx-icon-color: -fx-text-secondary;
+}
+
+.table-action-solve {
+    -fx-background-color: rgba(47, 158, 68, 0.14);
+}
+
+.table-action-solve .table-action-icon {
+    -fx-icon-color: -fx-success;
+}
+
+.table-action-delete {
+    -fx-background-color: rgba(224, 49, 49, 0.14);
+}
+
+.table-action-delete .table-action-icon {
+    -fx-icon-color: -fx-danger;
+}
+
+/* ----- Table view --------------------------------------------------------------- */
+.table-view {
+    -fx-background-color: -fx-bg-surface;
+    -fx-background-radius: 14;
+    -fx-border-color: -fx-border-subtle;
+    -fx-border-radius: 14;
+    -fx-border-width: 1;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: -fx-bg-elevated;
+    -fx-background-radius: 14 14 0 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent -fx-border-subtle transparent transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: -fx-text-secondary;
+    -fx-font-weight: bold;
+    -fx-font-size: 11px;
+}
+
+.table-row-cell {
+    -fx-background-color: -fx-bg-surface;
+    -fx-border-color: transparent transparent -fx-border-subtle transparent;
+    -fx-table-cell-border-color: transparent;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: derive(-fx-bg-surface, -3%);
+}
+
+.table-row-cell:selected {
+    -fx-background-color: derive(-fx-accent, 60%);
+}
+
+.table-view .table-cell {
+    -fx-text-fill: -fx-text-primary;
+    -fx-padding: 8 10;
+    -fx-border-color: transparent;
+}
+
+.actions-cell {
+    -fx-padding: 4 6;
+}
+
+.table-view .placeholder .label {
+    -fx-text-fill: -fx-text-secondary;
+}
+
+/* ----- Modal dialogs (Alert, Confirmation, add/edit forms) ----------------------- */
+.dialog-pane {
+    -fx-background-color: -fx-bg-surface;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: -fx-bg-elevated;
+}
+
+.dialog-pane .header-panel .label {
+    -fx-text-fill: -fx-text-primary;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.dialog-pane .content.label {
+    -fx-text-fill: -fx-text-primary;
+}
+
+/* ----- Charts (Analytics) ------------------------------------------------------ */
+.analytics-chart {
+    -fx-background-color: transparent;
+    -fx-legend-side: bottom;
+    -fx-min-height: 300;
+}
+
+.analytics-chart .chart-title {
+    -fx-text-fill: -fx-text-primary;
+}
+
+.analytics-chart .chart-legend {
+    -fx-background-color: transparent;
+}
+
+.analytics-chart .chart-legend-item-symbol {
+    -fx-background-radius: 4;
+}
+
+.analytics-chart .chart-legend .label {
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.analytics-chart .axis {
+    -fx-tick-label-fill: -fx-text-secondary;
+}
+
+.analytics-chart .axis-label {
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.analytics-chart .chart-pie-label {
+    -fx-fill: -fx-text-secondary;
+}
+
+.analytics-chart .default-color0.chart-pie,
+.analytics-chart .default-color0.chart-bar {
+    -fx-pie-color: -fx-success;
+    -fx-bar-fill: -fx-success;
+}
+
+.analytics-chart .default-color1.chart-pie,
+.analytics-chart .default-color1.chart-bar {
+    /* -fx-bg-elevated has too little contrast against the chart's own
+       background - text-muted keeps "Unsolved" reading as secondary
+       without disappearing, especially as a short bar next to a tall
+       green one. */
+    -fx-pie-color: -fx-text-muted;
+    -fx-bar-fill: -fx-text-muted;
+}
+
+/* ----- Activity heatmap ---------------------------------------------------------- */
+.heatmap-scroll,
+.heatmap-scroll > .viewport {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}
+
+.heatmap-cell {
+    -fx-background-radius: 3;
+}
+
+.heatmap-level-0 {
+    -fx-background-color: -fx-bg-elevated;
+}
+
+.heatmap-level-1 {
+    -fx-background-color: rgba(47, 158, 68, 0.35);
+}
+
+.heatmap-level-2 {
+    -fx-background-color: rgba(47, 158, 68, 0.55);
+}
+
+.heatmap-level-3 {
+    -fx-background-color: rgba(47, 158, 68, 0.75);
+}
+
+.heatmap-level-4 {
+    -fx-background-color: -fx-success;
+}
+
+.heatmap-month-label {
+    -fx-font-size: 10px;
+    -fx-text-fill: -fx-text-muted;
+}
+
+.heatmap-legend-label {
+    -fx-font-size: 11px;
+    -fx-text-fill: -fx-text-muted;
+}
+
+/* ----- Progress-by-topic rows (Analytics) ----------------------------------------- */
+.topic-progress-name {
+    -fx-font-size: 13px;
+    -fx-text-fill: -fx-text-primary;
+}
+
+.topic-progress-bar {
+    -fx-pref-height: 8;
+}
+
+.topic-progress-percent {
+    -fx-font-size: 12px;
+    -fx-text-fill: -fx-text-secondary;
+}
+
+.form-error-label {
+    -fx-text-fill: -fx-danger;
+    -fx-font-size: 12px;
+}
