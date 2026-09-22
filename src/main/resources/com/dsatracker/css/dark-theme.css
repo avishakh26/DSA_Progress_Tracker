@@ -209,6 +209,23 @@
     -fx-text-fill: -fx-text-secondary;
 }
 
+/* ----- Profile avatar (Settings) -------------------------------------------- */
+.profile-avatar {
+    -fx-stroke: -fx-border-subtle;
+    -fx-stroke-width: 2;
+}
+
+.profile-avatar-placeholder {
+    -fx-fill: -fx-bg-elevated;
+    -fx-stroke: -fx-border-subtle;
+    -fx-stroke-width: 2;
+}
+
+.profile-avatar-icon {
+    -fx-icon-size: 34;
+    -fx-icon-color: -fx-text-secondary;
+}
+
 /* ----- Badges (difficulty / status pills) ---------------------------------- */
 .badge {
     -fx-padding: 3 10;

@@ -52,8 +52,28 @@ CREATE TABLE IF NOT EXISTS activity (
     problems_solved INTEGER NOT NULL DEFAULT 0 CHECK (problems_solved >= 0)
 );
 
+-- Single-row table (id is always 1) holding the local user's profile, shown in Settings.
+CREATE TABLE IF NOT EXISTS profile (
+    id           INTEGER PRIMARY KEY CHECK (id = 1),
+    display_name TEXT,
+    email        TEXT,
+    bio          TEXT,
+    photo_path   TEXT,
+    updated_at   TEXT    NOT NULL DEFAULT (datetime('now'))
+);
+
+CREATE TABLE IF NOT EXISTS diary_entries (
+    id         INTEGER PRIMARY KEY AUTOINCREMENT,
+    title      TEXT    NOT NULL,
+    content    TEXT,
+    entry_date TEXT    NOT NULL DEFAULT (date('now')),
+    created_at TEXT    NOT NULL DEFAULT (datetime('now')),
+    updated_at TEXT    NOT NULL DEFAULT (datetime('now'))
+);
+
 CREATE INDEX IF NOT EXISTS idx_problems_topic_id  ON problems(topic_id);
 CREATE INDEX IF NOT EXISTS idx_problems_status     ON problems(status);
 CREATE INDEX IF NOT EXISTS idx_problems_difficulty ON problems(difficulty);
 CREATE INDEX IF NOT EXISTS idx_notes_topic_id      ON notes(topic_id);
 CREATE INDEX IF NOT EXISTS idx_activity_date        ON activity(activity_date);
+CREATE INDEX IF NOT EXISTS idx_diary_entries_date   ON diary_entries(entry_date);

@@ -20,6 +20,9 @@ public final class AppConstants {
     public static final String DATABASE_FILE = "dsa_tracker.db";
     public static final String JDBC_URL_PREFIX = "jdbc:sqlite:";
 
+    /** Subfolder of {@link #DATA_DIRECTORY} holding the copied profile picture file, if any. */
+    public static final String PROFILE_PHOTO_DIRECTORY = "profile";
+
     /** Classpath location of the idempotent DDL script, run on every startup. */
     public static final String SQL_SCHEMA = "/com/dsatracker/sql/schema.sql";
     /** Classpath location of the first-launch sample data script. */

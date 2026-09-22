@@ -10,25 +10,33 @@ import com.dsatracker.controller.RoadmapController;
 import com.dsatracker.controller.SettingsController;
 import com.dsatracker.database.DatabaseManager;
 import com.dsatracker.repository.ActivityRepository;
+import com.dsatracker.repository.DiaryEntryRepository;
 import com.dsatracker.repository.GoalRepository;
 import com.dsatracker.repository.NoteRepository;
 import com.dsatracker.repository.ProblemRepository;
+import com.dsatracker.repository.ProfileRepository;
 import com.dsatracker.repository.SqliteActivityRepository;
+import com.dsatracker.repository.SqliteDiaryEntryRepository;
 import com.dsatracker.repository.SqliteGoalRepository;
 import com.dsatracker.repository.SqliteNoteRepository;
 import com.dsatracker.repository.SqliteProblemRepository;
+import com.dsatracker.repository.SqliteProfileRepository;
 import com.dsatracker.repository.SqliteTopicRepository;
 import com.dsatracker.repository.TopicRepository;
 import com.dsatracker.service.ActivityService;
 import com.dsatracker.service.ActivityServiceImpl;
 import com.dsatracker.service.DashboardService;
 import com.dsatracker.service.DashboardServiceImpl;
+import com.dsatracker.service.DiaryService;
+import com.dsatracker.service.DiaryServiceImpl;
 import com.dsatracker.service.GoalService;
 import com.dsatracker.service.GoalServiceImpl;
 import com.dsatracker.service.NoteService;
 import com.dsatracker.service.NoteServiceImpl;
 import com.dsatracker.service.ProblemService;
 import com.dsatracker.service.ProblemServiceImpl;
+import com.dsatracker.service.ProfileService;
+import com.dsatracker.service.ProfileServiceImpl;
 import com.dsatracker.service.SettingsService;
 import com.dsatracker.service.SettingsServiceImpl;
 import com.dsatracker.service.TopicService;
@@ -53,6 +61,8 @@ public final class AppContext {
     private final ActivityService activityService;
     private final DashboardService dashboardService;
     private final SettingsService settingsService;
+    private final ProfileService profileService;
+    private final DiaryService diaryService;
     private final ThemeManager themeManager;
 
     public AppContext(final ThemeManager themeManager) {
@@ -63,6 +73,8 @@ public final class AppContext {
         final NoteRepository noteRepository = new SqliteNoteRepository();
         final GoalRepository goalRepository = new SqliteGoalRepository();
         final ActivityRepository activityRepository = new SqliteActivityRepository();
+        final ProfileRepository profileRepository = new SqliteProfileRepository();
+        final DiaryEntryRepository diaryEntryRepository = new SqliteDiaryEntryRepository();
 
         this.activityService = new ActivityServiceImpl(activityRepository);
         this.topicService = new TopicServiceImpl(topicRepository, problemRepository);
@@ -72,6 +84,8 @@ public final class AppContext {
         this.dashboardService = new DashboardServiceImpl(topicRepository, problemRepository, activityService, goalService);
         this.settingsService = new SettingsServiceImpl(topicRepository, problemRepository, activityRepository,
                 DatabaseManager.getInstance());
+        this.profileService = new ProfileServiceImpl(profileRepository);
+        this.diaryService = new DiaryServiceImpl(diaryEntryRepository);
     }
 
     public TopicService getTopicService() {
@@ -100,6 +114,14 @@ public final class AppContext {
 
     public SettingsService getSettingsService() {
         return settingsService;
+    }
+
+    public ProfileService getProfileService() {
+        return profileService;
+    }
+
+    public DiaryService getDiaryService() {
+        return diaryService;
     }
 
     public ThemeManager getThemeManager() {
@@ -135,7 +157,7 @@ public final class AppContext {
                 return new GoalsController(goalService, themeManager);
             }
             if (controllerClass == SettingsController.class) {
-                return new SettingsController(settingsService, themeManager);
+                return new SettingsController(settingsService, themeManager, profileService, diaryService, dashboardService);
             }
             return controllerClass.getDeclaredConstructor().newInstance();
         } catch (final ReflectiveOperationException e) {
