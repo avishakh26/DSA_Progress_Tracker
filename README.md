@@ -8,16 +8,38 @@ visualise progress with charts and a contribution heatmap.
 
 ---
 
-## Download (Windows, no Java needed)
+## Download & use (Windows — no Java needed)
 
-1. Go to the [Releases page](https://github.com/avishakh26/DSA_Progress_Tracker/releases/latest)
-   and download `DSA-Progress-Tracker-v1.0.0-windows.zip`.
-2. **Extract** the zip (don't run it from inside the zip).
-3. Double-click `DSA Progress Tracker.exe`. Right-click it → *Send to → Desktop* for a shortcut.
+1. Open the **[latest release](https://github.com/avishakh26/DSA_Progress_Tracker/releases/latest)**
+   and download `DSA-Progress-Tracker-vX.Y.Z-windows.zip` (under *Assets*).
+2. **Right-click the zip → Extract All.** Don't run it from inside the zip.
+3. Open the extracted `DSA Progress Tracker` folder and double-click **`DSA Progress Tracker.exe`**.
+4. Optional shortcut: right-click the `.exe` → *Show more options → Send to → Desktop (create shortcut)*.
 
-Windows SmartScreen may warn about an unsigned app: click **More info → Run anyway**.
-Your data is stored in `%USERPROFILE%\.dsa-tracker`. To build the exe yourself (needs a JDK 17+):
+**First launch**
+- Windows SmartScreen may say *"Windows protected your PC"* because the app isn't code-signed.
+  Click **More info → Run anyway**.
+- The app starts completely **empty** — add your own problems, notes, goals and diary entries.
+  (*Settings → Restore Sample Data* loads demo content if you want to explore.)
+
+**Your data & updates**
+- Everything is stored offline on your PC in `%USERPROFILE%\.dsa-tracker`, outside the app folder.
+- When a newer release exists, a banner appears at the top of the app with a **Download** button.
+  To update: download the new zip, extract it, and use the new folder. Your data carries over
+  automatically. You can then delete the old folder.
+- To uninstall, delete the app folder (and `%USERPROFILE%\.dsa-tracker` if you also want your data gone).
+
+Requires 64-bit Windows 10/11. Build the exe yourself (needs a JDK 17+):
 `powershell -ExecutionPolicy Bypass -File package-exe.ps1`.
+
+### Publishing a new version (maintainer)
+
+Raise `APP_VERSION` in `AppConstants.java`, commit, then push a tag — GitHub Actions builds and publishes the release:
+
+```bash
+git tag v1.0.1
+git push origin v1.0.1
+```
 
 ---
 
