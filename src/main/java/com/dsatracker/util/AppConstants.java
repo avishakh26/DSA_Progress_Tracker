@@ -14,7 +14,7 @@ public final class AppConstants {
 
     // ----- Application identity -------------------------------------------
     public static final String APP_TITLE = "DSA Progress Tracker";
-    public static final String APP_VERSION = "1.0.0";
+    public static final String APP_VERSION = "1.0.1";
     /** GitHub "owner/repo" whose latest release is checked for updates on startup. */
     public static final String GITHUB_REPO = "avishakh26/DSA_Progress_Tracker";
 

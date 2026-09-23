@@ -14,13 +14,15 @@ visualise progress with charts and a contribution heatmap.
    and download `DSA-Progress-Tracker-vX.Y.Z-windows.zip` (under *Assets*).
 2. **Right-click the zip → Extract All.** Don't run it from inside the zip.
 3. Open the extracted `DSA Progress Tracker` folder and double-click **`DSA Progress Tracker.exe`**.
-4. Optional shortcut: right-click the `.exe` → *Show more options → Send to → Desktop (create shortcut)*.
+4. On the first launch the app **creates a "DSA Progress Tracker" shortcut on your Desktop** for you.
+   After that you can launch it from there (it's only created once — deleting it later is fine).
 
 **First launch**
 - Windows SmartScreen may say *"Windows protected your PC"* because the app isn't code-signed.
   Click **More info → Run anyway**.
-- The app starts completely **empty** — add your own problems, notes, goals and diary entries.
-  (*Settings → Restore Sample Data* loads demo content if you want to explore.)
+- The app starts with the standard **DSA roadmap** (17 topics across 6 phases, all "not started") and is
+  otherwise **empty** — add your own problems, notes, goals and diary entries.
+  (*Settings → Restore Sample Data* loads demo problems and notes if you want to explore.)
 
 **Your data & updates**
 - Everything is stored offline on your PC in `%USERPROFILE%\.dsa-tracker`, outside the app folder.

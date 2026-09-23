@@ -23,7 +23,7 @@ New-Item -ItemType Directory $stage | Out-Null
 Copy-Item target\dsa-progress-tracker.jar $stage
 
 $icon = Join-Path $PSScriptRoot 'src\main\resources\com\dsatracker\images\app-icon.ico'
-& $jpackage --type app-image --name 'DSA Progress Tracker' --app-version 1.0.0 `
+& $jpackage --type app-image --name 'DSA Progress Tracker' --app-version 1.0.1 `
     --input $stage --main-jar dsa-progress-tracker.jar --main-class com.dsatracker.Main `
     --icon $icon --dest $dist --vendor 'DSA Tracker' --java-options '-Dfile.encoding=UTF-8'
 if ($LASTEXITCODE -ne 0) { throw 'jpackage failed' }
