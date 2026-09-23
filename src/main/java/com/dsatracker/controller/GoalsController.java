@@ -6,7 +6,7 @@ import com.dsatracker.model.enums.GoalType;
 import com.dsatracker.service.GoalProgress;
 import com.dsatracker.service.GoalService;
 import com.dsatracker.util.AlertHelper;
-import com.dsatracker.view.ProgressCard;
+import com.dsatracker.view.GaugeCard;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextInputDialog;
@@ -48,7 +48,7 @@ public final class GoalsController implements Refreshable {
     private void renderGoalSection(final VBox container, final GoalType type, final String title) {
         final Optional<GoalProgress> progress = goalService.getTodayProgress(type);
 
-        final ProgressCard card = new ProgressCard(title);
+        final GaugeCard card = new GaugeCard(title);
         final Integer currentTarget;
         if (progress.isPresent()) {
             final GoalProgress goalProgress = progress.get();

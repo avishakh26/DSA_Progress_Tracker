@@ -204,6 +204,20 @@
     -fx-text-fill: -fx-text-secondary;
 }
 
+.gauge-card {
+    -fx-alignment: center;
+}
+
+.gauge-needle {
+    -fx-fill: -fx-text-primary;
+}
+
+.gauge-hub {
+    -fx-fill: -fx-bg-surface;
+    -fx-stroke: -fx-text-primary;
+    -fx-stroke-width: 2;
+}
+
 /* ----- Recent activity feed ------------------------------------------------ */
 .activity-item {
     -fx-font-size: 13px;
