@@ -10,7 +10,7 @@ visualise progress with charts and a contribution heatmap.
 
 ## Download (Windows, no Java needed)
 
-1. Go to the [Releases page](https://github.com/avishakh26/Advance-Programming-Project/releases/latest)
+1. Go to the [Releases page](https://github.com/avishakh26/DSA_Progress_Tracker/releases/latest)
    and download `DSA-Progress-Tracker-v1.0.0-windows.zip`.
 2. **Extract** the zip (don't run it from inside the zip).
 3. Double-click `DSA Progress Tracker.exe`. Right-click it → *Send to → Desktop* for a shortcut.
