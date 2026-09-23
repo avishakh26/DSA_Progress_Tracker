@@ -29,7 +29,10 @@
     </left>
 
     <center>
-        <StackPane fx:id="contentArea" styleClass="content-area"/>
+        <VBox>
+            <VBox fx:id="updateBanner" visible="false" managed="false"/>
+            <StackPane fx:id="contentArea" styleClass="content-area" VBox.vgrow="ALWAYS"/>
+        </VBox>
     </center>
 
 </BorderPane>

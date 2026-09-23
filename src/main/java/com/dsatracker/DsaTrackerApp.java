@@ -5,6 +5,7 @@ import com.dsatracker.exception.DatabaseInitializationException;
 import com.dsatracker.util.AlertHelper;
 import com.dsatracker.util.AppConstants;
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,8 +28,18 @@ import java.util.Objects;
  */
 public class DsaTrackerApp extends Application {
 
+    private static HostServices hostServices;
+
+    /** Lets any controller open a link in the user's browser. */
+    public static void openInBrowser(final String url) {
+        if (hostServices != null) {
+            hostServices.showDocument(url);
+        }
+    }
+
     @Override
     public void start(final Stage primaryStage) throws IOException {
+        hostServices = getHostServices();
         try {
             DatabaseManager.getInstance().initialize();
         } catch (final DatabaseInitializationException e) {

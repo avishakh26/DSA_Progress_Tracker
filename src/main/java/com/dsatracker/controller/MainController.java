@@ -1,6 +1,15 @@
 package com.dsatracker.controller;
 
 import com.dsatracker.AppContext;
+import com.dsatracker.DsaTrackerApp;
+import com.dsatracker.util.UpdateChecker;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import com.dsatracker.util.AlertHelper;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +45,9 @@ public final class MainController {
     @FXML
     private StackPane contentArea;
 
+    @FXML
+    private VBox updateBanner;
+
     public MainController(final AppContext appContext) {
         this.appContext = appContext;
         // Registered before any routed view is loaded (below, in initialize()), so a controller
@@ -52,6 +64,36 @@ public final class MainController {
             navContainer.getChildren().add(button);
         }
         navigateTo(NavItem.DASHBOARD);
+        checkForUpdateInBackground();
+    }
+
+    /** Asks GitHub for a newer release without blocking startup; shows a dismissible banner if one exists. */
+    private void checkForUpdateInBackground() {
+        final Thread thread = new Thread(() -> UpdateChecker.checkForUpdate()
+                .ifPresent(update -> Platform.runLater(() -> showUpdateBanner(update))), "update-check");
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    private void showUpdateBanner(final UpdateChecker.Update update) {
+        final Label message = new Label("A new version (" + update.version() + ") is available.");
+        message.setStyle("-fx-text-fill: white; -fx-font-weight: bold;");
+        final Region spacer = new Region();
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+        final Button download = new Button("Download");
+        download.setOnAction(event -> DsaTrackerApp.openInBrowser(update.pageUrl()));
+        final Button dismiss = new Button("Later");
+        dismiss.setOnAction(event -> {
+            updateBanner.setVisible(false);
+            updateBanner.setManaged(false);
+        });
+        final HBox bar = new HBox(10, message, spacer, download, dismiss);
+        bar.setAlignment(Pos.CENTER_LEFT);
+        bar.setPadding(new Insets(8, 16, 8, 16));
+        bar.setStyle("-fx-background-color: -fx-accent;");
+        updateBanner.getChildren().setAll(bar);
+        updateBanner.setVisible(true);
+        updateBanner.setManaged(true);
     }
 
     private Button createNavButton(final NavItem item) {
