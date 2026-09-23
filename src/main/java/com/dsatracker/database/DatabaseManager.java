@@ -125,12 +125,16 @@ public final class DatabaseManager {
                 pragma.execute("PRAGMA journal_mode = WAL");
             }
             runScript(AppConstants.SQL_SCHEMA);
-            if (seedRoadmap && isTopicsTableEmpty()) {
+            // Seed when the file is brand new, OR when an earlier build left a database that was
+            // never seeded (user_version 0) and is still empty - otherwise a new user who ends up
+            // with such a leftover file would see a blank roadmap forever.
+            if ((seedRoadmap || !isRoadmapSeeded()) && isTopicsTableEmpty()) {
                 runScript(AppConstants.SQL_ROADMAP);
                 if (seedSample) {
                     runScript(AppConstants.SQL_SEED);
                 }
             }
+            markRoadmapSeeded();
             initialized = true;
         } catch (final IOException | SQLException e) {
             throw new DatabaseInitializationException("Failed to initialize the local database.", e);
@@ -188,6 +192,20 @@ public final class DatabaseManager {
             }
         } catch (final SQLException e) {
             throw new DatabaseInitializationException("Failed to clear existing data.", e);
+        }
+    }
+
+    /** The roadmap is "seeded" once PRAGMA user_version is non-zero, so a later Clear All Data stays cleared. */
+    private boolean isRoadmapSeeded() throws SQLException {
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery("PRAGMA user_version")) {
+            return resultSet.next() && resultSet.getInt(1) != 0;
+        }
+    }
+
+    private void markRoadmapSeeded() throws SQLException {
+        try (Statement statement = connection.createStatement()) {
+            statement.execute("PRAGMA user_version = 1");
         }
     }
 
