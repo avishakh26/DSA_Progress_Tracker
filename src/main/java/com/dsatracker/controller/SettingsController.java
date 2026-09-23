@@ -4,6 +4,8 @@ import com.dsatracker.ThemeManager;
 import com.dsatracker.ThemeManager.Theme;
 import com.dsatracker.service.SettingsService;
 import com.dsatracker.util.AlertHelper;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -13,6 +15,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.util.Duration;
 
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -57,6 +62,29 @@ public final class SettingsController implements Refreshable {
     @FXML
     private void initialize() {
         refresh();
+        // Known JavaFX/Windows ColorPicker quirk: clicking Save/Use in its built-in custom-color
+        // popup can spuriously minimize the whole app window as the popup closes - nothing this
+        // app does triggers that itself, so the only real fix is to notice it happening and
+        // immediately undo it. The native minimize can lag a tick behind the popup closing, so
+        // this checks right away and again shortly after.
+        accentColorPicker.showingProperty().addListener((obs, wasShowing, isShowing) -> {
+            if (wasShowing && !isShowing) {
+                Platform.runLater(this::restoreIfSpuriouslyMinimized);
+                final PauseTransition delayedRecheck = new PauseTransition(Duration.millis(300));
+                delayedRecheck.setOnFinished(event -> restoreIfSpuriouslyMinimized());
+                delayedRecheck.play();
+            }
+        });
+    }
+
+    private void restoreIfSpuriouslyMinimized() {
+        if (accentColorPicker.getScene() == null) {
+            return;
+        }
+        final Window window = accentColorPicker.getScene().getWindow();
+        if (window instanceof Stage stage && stage.isIconified()) {
+            stage.setIconified(false);
+        }
     }
 
     @Override
