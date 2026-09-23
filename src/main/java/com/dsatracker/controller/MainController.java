@@ -38,6 +38,10 @@ public final class MainController {
 
     public MainController(final AppContext appContext) {
         this.appContext = appContext;
+        // Registered before any routed view is loaded (below, in initialize()), so a controller
+        // that needs to jump to another section - e.g. Dashboard's "View All" diary link - can
+        // call back into the same navigation this sidebar uses instead of duplicating it.
+        appContext.setNavigator(this::navigateTo);
     }
 
     @FXML

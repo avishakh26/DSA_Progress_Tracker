@@ -7,6 +7,7 @@ public enum NavItem {
     PROBLEMS("Problems", "fas-tasks", "/com/dsatracker/fxml/ProblemsView.fxml"),
     ANALYTICS("Analytics", "fas-chart-bar", "/com/dsatracker/fxml/AnalyticsView.fxml"),
     NOTES("Notes", "fas-sticky-note", "/com/dsatracker/fxml/NotesView.fxml"),
+    DIARY("Diary", "fas-book", "/com/dsatracker/fxml/DiaryView.fxml"),
     GOALS("Goals", "fas-bullseye", "/com/dsatracker/fxml/GoalsView.fxml"),
     SETTINGS("Settings", "fas-cog", "/com/dsatracker/fxml/SettingsView.fxml");
 

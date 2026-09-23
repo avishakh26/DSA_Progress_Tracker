@@ -2,8 +2,10 @@ package com.dsatracker;
 
 import com.dsatracker.controller.AnalyticsController;
 import com.dsatracker.controller.DashboardController;
+import com.dsatracker.controller.DiaryController;
 import com.dsatracker.controller.GoalsController;
 import com.dsatracker.controller.MainController;
+import com.dsatracker.controller.NavItem;
 import com.dsatracker.controller.NotesController;
 import com.dsatracker.controller.ProblemsController;
 import com.dsatracker.controller.RoadmapController;
@@ -42,6 +44,8 @@ import com.dsatracker.service.SettingsServiceImpl;
 import com.dsatracker.service.TopicService;
 import com.dsatracker.service.TopicServiceImpl;
 
+import java.util.function.Consumer;
+
 /**
  * Hand-rolled composition root: builds every repository and service exactly
  * once, wired against the already-initialized {@code DatabaseManager}
@@ -64,6 +68,11 @@ public final class AppContext {
     private final ProfileService profileService;
     private final DiaryService diaryService;
     private final ThemeManager themeManager;
+
+    /** Set by {@link MainController} on construction so other controllers can route to a
+     *  different sidebar section (e.g. the Dashboard's "View All" diary link) without each
+     *  one needing its own reference to the sidebar. */
+    private Consumer<NavItem> navigator;
 
     public AppContext(final ThemeManager themeManager) {
         this.themeManager = themeManager;
@@ -128,6 +137,10 @@ public final class AppContext {
         return themeManager;
     }
 
+    public void setNavigator(final Consumer<NavItem> navigator) {
+        this.navigator = navigator;
+    }
+
     /**
      * Given the {@code fx:controller} class an {@code FXMLLoader} needs to
      * instantiate, returns a fully-wired instance. Controllers with no
@@ -139,7 +152,8 @@ public final class AppContext {
                 return new MainController(this);
             }
             if (controllerClass == DashboardController.class) {
-                return new DashboardController(dashboardService);
+                return new DashboardController(dashboardService, profileService, diaryService, themeManager,
+                        () -> navigator.accept(NavItem.DIARY));
             }
             if (controllerClass == RoadmapController.class) {
                 return new RoadmapController(topicService, problemService, themeManager);
@@ -157,7 +171,10 @@ public final class AppContext {
                 return new GoalsController(goalService, themeManager);
             }
             if (controllerClass == SettingsController.class) {
-                return new SettingsController(settingsService, themeManager, profileService, diaryService, dashboardService);
+                return new SettingsController(settingsService, themeManager);
+            }
+            if (controllerClass == DiaryController.class) {
+                return new DiaryController(themeManager, diaryService);
             }
             return controllerClass.getDeclaredConstructor().newInstance();
         } catch (final ReflectiveOperationException e) {

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPane fx:id="scrollPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.dsatracker.controller.DiaryController"
+            fitToWidth="true" styleClass="content-scroll">
+    <VBox spacing="24" styleClass="page-root">
+
+        <HBox alignment="CENTER_LEFT" spacing="12">
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+                <Label text="Diary" styleClass="page-title"/>
+                <Label text="Personal journal entries - not tied to any topic." styleClass="page-subtitle"/>
+            </VBox>
+            <Button text="Write Entry" onAction="#onAddDiaryEntry" styleClass="primary-button"/>
+        </HBox>
+
+        <Label fx:id="diaryEmptyLabel" text="No diary entries yet - write your first one." styleClass="subtitle-label"
+               managed="false" visible="false"/>
+        <FlowPane fx:id="diaryGrid" hgap="16" vgap="16"/>
+
+    </VBox>
+</ScrollPane>

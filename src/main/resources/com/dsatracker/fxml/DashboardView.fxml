@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <ScrollPane fx:id="scrollPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
@@ -14,6 +19,27 @@
         <VBox spacing="4">
             <Label text="Dashboard" styleClass="page-title"/>
             <Label text="Your DSA practice at a glance." styleClass="page-subtitle"/>
+        </VBox>
+
+        <VBox spacing="12" styleClass="card" maxWidth="700">
+            <Label text="Profile" styleClass="section-title"/>
+            <Label text="Your personal details, shown only to you on this device." styleClass="page-subtitle" wrapText="true"/>
+            <HBox spacing="24">
+                <VBox spacing="8" alignment="TOP_CENTER">
+                    <StackPane fx:id="avatarContainer" prefWidth="96" prefHeight="96" maxWidth="96" maxHeight="96"/>
+                    <Button text="Change Photo" onAction="#onChangePhoto"/>
+                    <Button text="Remove" onAction="#onRemovePhoto"/>
+                </VBox>
+                <VBox spacing="10" HBox.hgrow="ALWAYS">
+                    <TextField fx:id="displayNameField" promptText="Display name"/>
+                    <TextField fx:id="emailField" promptText="Email"/>
+                    <TextArea fx:id="bioArea" promptText="A short bio..." prefRowCount="3" wrapText="true"/>
+                    <HBox>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="Save Profile" onAction="#onSaveProfile" styleClass="primary-button"/>
+                    </HBox>
+                </VBox>
+            </HBox>
         </VBox>
 
         <FlowPane fx:id="statGrid" hgap="16" vgap="16"/>
@@ -32,6 +58,20 @@
                        styleClass="subtitle-label" managed="false" visible="false" wrapText="true"/>
             </VBox>
         </HBox>
+
+        <VBox spacing="12" styleClass="card" maxWidth="900">
+            <HBox alignment="CENTER_LEFT" spacing="12">
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <Label text="Diary" styleClass="section-title"/>
+                    <Label text="Your most recent journal entries." styleClass="page-subtitle" wrapText="true"/>
+                </VBox>
+                <Button text="View All" onAction="#onViewAllDiary"/>
+                <Button text="Write Entry" onAction="#onAddDiaryEntry" styleClass="primary-button"/>
+            </HBox>
+            <Label fx:id="diaryPreviewEmptyLabel" text="No diary entries yet - write your first one." styleClass="subtitle-label"
+                   managed="false" visible="false"/>
+            <FlowPane fx:id="diaryPreviewGrid" hgap="16" vgap="16"/>
+        </VBox>
 
     </VBox>
 </ScrollPane>
