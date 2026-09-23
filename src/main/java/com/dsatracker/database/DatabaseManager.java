@@ -53,8 +53,8 @@ public final class DatabaseManager {
     }
 
     /**
-     * Opens the on-disk database under {@code data/}, creating and seeding
-     * it on first run. Safe to call more than once - subsequent calls are a
+     * Opens the on-disk database under {@code data/}, creating it empty
+     * on first run (sample data is only added via Settings' "Restore Sample Data"). Safe to call more than once - subsequent calls are a
      * no-op while a connection is already open.
      */
     public synchronized void initialize() {
@@ -66,7 +66,7 @@ public final class DatabaseManager {
             migrateLegacyDataDirectory(dataDir);
             Files.createDirectories(dataDir);
             final Path dbFile = dataDir.resolve(AppConstants.DATABASE_FILE);
-            open(AppConstants.JDBC_URL_PREFIX + dbFile);
+            open(AppConstants.JDBC_URL_PREFIX + dbFile, false);
         } catch (final IOException e) {
             throw new DatabaseInitializationException("Could not create the data directory for the database.", e);
         }
@@ -108,10 +108,11 @@ public final class DatabaseManager {
         if (initialized) {
             return;
         }
-        open(jdbcUrl);
+        open(jdbcUrl, true);
     }
 
-    private void open(final String jdbcUrl) {
+    /** @param seedIfEmpty seed sample data into an empty database - tests only; the real app starts empty. */
+    private void open(final String jdbcUrl, final boolean seedIfEmpty) {
         try {
             connection = DriverManager.getConnection(jdbcUrl);
             try (Statement pragma = connection.createStatement()) {
@@ -119,7 +120,7 @@ public final class DatabaseManager {
                 pragma.execute("PRAGMA journal_mode = WAL");
             }
             runScript(AppConstants.SQL_SCHEMA);
-            if (isTopicsTableEmpty()) {
+            if (seedIfEmpty && isTopicsTableEmpty()) {
                 runScript(AppConstants.SQL_SEED);
             }
             initialized = true;
