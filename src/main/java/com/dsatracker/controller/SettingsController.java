@@ -176,8 +176,7 @@ public final class SettingsController implements Refreshable {
 
         if (photoPath != null && Files.exists(Path.of(photoPath))) {
             circle.getStyleClass().add("profile-avatar");
-            circle.setFill(new ImagePattern(new Image(Path.of(photoPath).toUri().toString(),
-                    AVATAR_RADIUS * 2, AVATAR_RADIUS * 2, true, true)));
+            circle.setFill(new ImagePattern(new Image(Path.of(photoPath).toUri().toString())));
             avatarContainer.getChildren().add(circle);
         } else {
             circle.getStyleClass().add("profile-avatar-placeholder");
@@ -197,12 +196,14 @@ public final class SettingsController implements Refreshable {
         if (chosen == null) {
             return;
         }
-        try {
-            profileService.updatePhoto(chosen.toPath());
-            renderAvatar(profileService.getProfile().getPhotoPath());
-        } catch (final RuntimeException e) {
-            AlertHelper.showError("Could Not Set Profile Picture", e.getMessage());
-        }
+        new PhotoResizeDialog(themeManager, chosen).showAndWait().ifPresent(cropped -> {
+            try {
+                profileService.updatePhoto(cropped);
+                renderAvatar(profileService.getProfile().getPhotoPath());
+            } catch (final RuntimeException e) {
+                AlertHelper.showError("Could Not Set Profile Picture", e.getMessage());
+            }
+        });
     }
 
     @FXML

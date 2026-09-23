@@ -3,7 +3,11 @@ package com.dsatracker.service;
 import com.dsatracker.model.Profile;
 import com.dsatracker.repository.ProfileRepository;
 import com.dsatracker.util.AppConstants;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
@@ -57,6 +61,25 @@ public final class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
+    public Profile updatePhoto(final WritableImage image) {
+        try {
+            final Path photoDir = Path.of(AppConstants.DATA_DIRECTORY, AppConstants.PROFILE_PHOTO_DIRECTORY);
+            Files.createDirectories(photoDir);
+            clearExistingPhotos(photoDir);
+
+            final Path target = photoDir.resolve("avatar.png");
+            ImageIO.write(toBufferedImage(image), "png", target.toFile());
+
+            final Profile profile = getProfile();
+            profile.setPhotoPath(target.toString());
+            profile.setUpdatedAt(LocalDateTime.now());
+            return profileRepository.save(profile);
+        } catch (final IOException e) {
+            throw new UncheckedIOException("Could not save the profile picture.", e);
+        }
+    }
+
+    @Override
     public Profile removePhoto() {
         final Profile profile = getProfile();
         if (profile.getPhotoPath() != null) {
@@ -83,5 +106,18 @@ public final class ProfileServiceImpl implements ProfileService {
         final String name = file.getFileName().toString();
         final int dot = name.lastIndexOf('.');
         return dot < 0 ? "" : name.substring(dot);
+    }
+
+    private static BufferedImage toBufferedImage(final WritableImage image) {
+        final int width = (int) image.getWidth();
+        final int height = (int) image.getHeight();
+        final BufferedImage buffered = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        final PixelReader reader = image.getPixelReader();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                buffered.setRGB(x, y, reader.getArgb(x, y));
+            }
+        }
+        return buffered;
     }
 }
