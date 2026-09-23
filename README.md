@@ -8,7 +8,20 @@ visualise progress with charts and a contribution heatmap.
 
 ---
 
-## Running
+## Download (Windows, no Java needed)
+
+1. Go to the [Releases page](https://github.com/avishakh26/Advance-Programming-Project/releases/latest)
+   and download `DSA-Progress-Tracker-v1.0.0-windows.zip`.
+2. **Extract** the zip (don't run it from inside the zip).
+3. Double-click `DSA Progress Tracker.exe`. Right-click it → *Send to → Desktop* for a shortcut.
+
+Windows SmartScreen may warn about an unsigned app: click **More info → Run anyway**.
+Your data is stored in `%USERPROFILE%\.dsa-tracker`. To build the exe yourself (needs a JDK 17+):
+`powershell -ExecutionPolicy Bypass -File package-exe.ps1`.
+
+---
+
+## Running (developers)
 
 ```bash
 mvn clean javafx:run          # run in development
