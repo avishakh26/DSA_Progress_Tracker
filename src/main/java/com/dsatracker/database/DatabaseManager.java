@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * Singleton owner of the single JDBC {@link Connection} to the local SQLite
@@ -61,11 +63,38 @@ public final class DatabaseManager {
         }
         try {
             final Path dataDir = Path.of(AppConstants.DATA_DIRECTORY);
+            migrateLegacyDataDirectory(dataDir);
             Files.createDirectories(dataDir);
             final Path dbFile = dataDir.resolve(AppConstants.DATABASE_FILE);
             open(AppConstants.JDBC_URL_PREFIX + dbFile);
         } catch (final IOException e) {
             throw new DatabaseInitializationException("Could not create the data directory for the database.", e);
+        }
+    }
+
+    /**
+     * One-time upgrade path: older builds stored everything under a {@code ./data} folder
+     * relative to the process's working directory (see {@link AppConstants#DATA_DIRECTORY}),
+     * which such a launch might never point at again. If the new, stable location is still
+     * empty but a legacy {@code ./data} folder exists next to wherever this run happens to
+     * start from, copy it over once so nothing already saved - the database, the profile
+     * photo, settings.properties - looks like it vanished.
+     */
+    private void migrateLegacyDataDirectory(final Path newDataDir) throws IOException {
+        final Path legacyDataDir = Path.of("data").toAbsolutePath().normalize();
+        if (Files.exists(newDataDir) || !Files.isDirectory(legacyDataDir) || legacyDataDir.equals(newDataDir)) {
+            return;
+        }
+        Files.createDirectories(newDataDir);
+        try (Stream<Path> paths = Files.walk(legacyDataDir)) {
+            for (final Path source : paths.sorted().toList()) {
+                final Path target = newDataDir.resolve(legacyDataDir.relativize(source).toString());
+                if (Files.isDirectory(source)) {
+                    Files.createDirectories(target);
+                } else {
+                    Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
+                }
+            }
         }
     }
 

@@ -68,7 +68,9 @@ public final class ProfileServiceImpl implements ProfileService {
             clearExistingPhotos(photoDir);
 
             final Path target = photoDir.resolve("avatar.png");
-            ImageIO.write(toBufferedImage(image), "png", target.toFile());
+            if (!ImageIO.write(toBufferedImage(image), "png", target.toFile())) {
+                throw new IOException("No PNG writer available to save the profile picture.");
+            }
 
             final Profile profile = getProfile();
             profile.setPhotoPath(target.toString());

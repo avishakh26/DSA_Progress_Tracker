@@ -1,5 +1,7 @@
 package com.dsatracker.util;
 
+import java.io.File;
+
 /**
  * Central, immutable configuration values for the application.
  *
@@ -15,8 +17,18 @@ public final class AppConstants {
     public static final String APP_VERSION = "1.0.0";
 
     // ----- Database --------------------------------------------------------
-    /** Folder (relative to the working directory) holding the SQLite file. */
-    public static final String DATA_DIRECTORY = "data";
+    /** Folder holding the SQLite file, the profile photo and settings.properties - anchored to
+     *  the user's home directory rather than the process's working directory, so it resolves to
+     *  the same place no matter how the app is launched (IDE run config, a double-clicked jar,
+     *  a desktop shortcut with its own "Start in" folder, ...). A working-directory-relative
+     *  folder only ever finds the same data when every launch happens to start from the exact
+     *  same directory - otherwise each differently-launched run silently gets its own empty copy,
+     *  which is most visible with the profile photo since (unlike topics/problems) there's no
+     *  seed data to mask a "new" database looking like the old one. {@link
+     *  com.dsatracker.database.DatabaseManager} migrates an old working-directory-relative
+     *  {@code ./data} folder here once, the first time it finds this location empty. */
+    public static final String DATA_DIRECTORY =
+            System.getProperty("user.home") + File.separator + ".dsa-tracker";
     public static final String DATABASE_FILE = "dsa_tracker.db";
     public static final String JDBC_URL_PREFIX = "jdbc:sqlite:";
 
@@ -34,7 +46,6 @@ public final class AppConstants {
     public static final String CSS_LIGHT_THEME = "/com/dsatracker/css/light-theme.css";
     public static final String CSS_OCEAN_THEME = "/com/dsatracker/css/ocean-theme.css";
     public static final String CSS_FOREST_THEME = "/com/dsatracker/css/forest-theme.css";
-    public static final String CSS_ROSE_THEME = "/com/dsatracker/css/rose-theme.css";
     /** Window/taskbar icon, provided at several sizes so the OS can pick the sharpest fit. */
     public static final int[] APP_ICON_SIZES = {16, 24, 32, 48, 64, 128, 256};
     public static final String APP_ICON_PATH_TEMPLATE = "/com/dsatracker/images/app-icon-%d.png";

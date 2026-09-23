@@ -28,8 +28,7 @@ public final class ThemeManager {
         DARK(AppConstants.CSS_DARK_THEME, "#6C8CFF"),
         LIGHT(AppConstants.CSS_LIGHT_THEME, "#3B5BDB"),
         OCEAN(AppConstants.CSS_OCEAN_THEME, "#4A7FA7"),
-        FOREST(AppConstants.CSS_FOREST_THEME, "#8EB69B"),
-        ROSE(AppConstants.CSS_ROSE_THEME, "#FF69B4");
+        FOREST(AppConstants.CSS_FOREST_THEME, "#8EB69B");
 
         private final String cssPath;
         private final String defaultAccentHex;

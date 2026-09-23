@@ -29,16 +29,14 @@ public final class SettingsController implements Refreshable {
             Theme.DARK, List.of("#0F1117", "#171A23", "#6C8CFF", "#E6E9F0"),
             Theme.LIGHT, List.of("#F5F6FA", "#FFFFFF", "#3B5BDB", "#1B1F2A"),
             Theme.OCEAN, List.of("#0A1931", "#1A3D63", "#4A7FA7", "#F6FAFD"),
-            Theme.FOREST, List.of("#051F20", "#0B2B26", "#8EB69B", "#DAF1DE"),
-            Theme.ROSE, List.of("#800021", "#881144", "#FF69B4", "#FDEAF1")
+            Theme.FOREST, List.of("#051F20", "#0B2B26", "#8EB69B", "#DAF1DE")
     ));
 
     private static final Map<Theme, String> THEME_LABELS = new EnumMap<>(Map.of(
             Theme.DARK, "Dark",
             Theme.LIGHT, "Light",
             Theme.OCEAN, "Ocean",
-            Theme.FOREST, "Forest",
-            Theme.ROSE, "Rose"
+            Theme.FOREST, "Forest"
     ));
 
     private final SettingsService settingsService;
