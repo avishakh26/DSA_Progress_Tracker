@@ -39,7 +39,9 @@ public final class AppConstants {
 
     /** Classpath location of the idempotent DDL script, run on every startup. */
     public static final String SQL_SCHEMA = "/com/dsatracker/sql/schema.sql";
-    /** Classpath location of the first-launch sample data script. */
+    /** Classpath location of the default roadmap topics every new database starts with. */
+    public static final String SQL_ROADMAP = "/com/dsatracker/sql/roadmap.sql";
+    /** Classpath location of the optional sample data script (problems, notes, goal, activity). */
     public static final String SQL_SEED = "/com/dsatracker/sql/seed.sql";
 
     // ----- Views (classpath locations under src/main/resources) ------------

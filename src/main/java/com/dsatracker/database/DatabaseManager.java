@@ -53,8 +53,8 @@ public final class DatabaseManager {
     }
 
     /**
-     * Opens the on-disk database under {@code data/}, creating it empty
-     * on first run (sample data is only added via Settings' "Restore Sample Data"). Safe to call more than once - subsequent calls are a
+     * Opens the on-disk database under {@code data/}, creating it on first run
+     * with just the default roadmap topics (sample data is only added via Settings' "Restore Sample Data"). Safe to call more than once - subsequent calls are a
      * no-op while a connection is already open.
      */
     public synchronized void initialize() {
@@ -66,7 +66,8 @@ public final class DatabaseManager {
             migrateLegacyDataDirectory(dataDir);
             Files.createDirectories(dataDir);
             final Path dbFile = dataDir.resolve(AppConstants.DATABASE_FILE);
-            open(AppConstants.JDBC_URL_PREFIX + dbFile, false);
+            final boolean firstLaunch = Files.notExists(dbFile);
+            open(AppConstants.JDBC_URL_PREFIX + dbFile, firstLaunch, false);
         } catch (final IOException e) {
             throw new DatabaseInitializationException("Could not create the data directory for the database.", e);
         }
@@ -108,11 +109,15 @@ public final class DatabaseManager {
         if (initialized) {
             return;
         }
-        open(jdbcUrl, true);
+        open(jdbcUrl, true, true);
     }
 
-    /** @param seedIfEmpty seed sample data into an empty database - tests only; the real app starts empty. */
-    private void open(final String jdbcUrl, final boolean seedIfEmpty) {
+    /**
+     * @param seedRoadmap add the default roadmap topics - true only when the database is brand new,
+     *                    so a user who later clears everything doesn't get them back on restart
+     * @param seedSample  also add the sample problems/notes/goal - tests only; the real app never does
+     */
+    private void open(final String jdbcUrl, final boolean seedRoadmap, final boolean seedSample) {
         try {
             connection = DriverManager.getConnection(jdbcUrl);
             try (Statement pragma = connection.createStatement()) {
@@ -120,8 +125,11 @@ public final class DatabaseManager {
                 pragma.execute("PRAGMA journal_mode = WAL");
             }
             runScript(AppConstants.SQL_SCHEMA);
-            if (seedIfEmpty && isTopicsTableEmpty()) {
-                runScript(AppConstants.SQL_SEED);
+            if (seedRoadmap && isTopicsTableEmpty()) {
+                runScript(AppConstants.SQL_ROADMAP);
+                if (seedSample) {
+                    runScript(AppConstants.SQL_SEED);
+                }
             }
             initialized = true;
         } catch (final IOException | SQLException e) {
@@ -158,6 +166,7 @@ public final class DatabaseManager {
     public synchronized void restoreSampleData() {
         clearAllTables();
         try {
+            runScript(AppConstants.SQL_ROADMAP);
             runScript(AppConstants.SQL_SEED);
         } catch (final IOException | SQLException e) {
             throw new DatabaseInitializationException("Failed to restore sample data.", e);

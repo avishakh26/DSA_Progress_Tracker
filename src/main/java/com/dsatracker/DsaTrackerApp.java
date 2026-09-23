@@ -4,6 +4,7 @@ import com.dsatracker.database.DatabaseManager;
 import com.dsatracker.exception.DatabaseInitializationException;
 import com.dsatracker.util.AlertHelper;
 import com.dsatracker.util.AppConstants;
+import com.dsatracker.util.DesktopShortcut;
 import javafx.application.Application;
 import javafx.application.HostServices;
 import javafx.application.Platform;
@@ -71,6 +72,7 @@ public class DsaTrackerApp extends Application {
         }
         primaryStage.setScene(scene);
         primaryStage.show();
+        DesktopShortcut.createOnFirstRun();
     }
 
     /**
