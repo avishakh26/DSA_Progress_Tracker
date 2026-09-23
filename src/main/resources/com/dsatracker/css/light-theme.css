@@ -39,6 +39,10 @@
     -fx-border-radius: 14;
     -fx-border-width: 1;
     -fx-effect: dropshadow(gaussian, rgba(16, 24, 40, 0.08), 18, 0, 0, 6);
+    /* The Card.java base class sets this same inset in Java for its own subclasses - this catches
+       every plain "styleClass=card" VBox declared straight in FXML, which otherwise gets none at
+       all and renders its title text flush against the rounded border. */
+    -fx-padding: 18;
 }
 
 .card:hover {

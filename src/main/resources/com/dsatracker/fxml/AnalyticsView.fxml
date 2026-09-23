@@ -17,7 +17,7 @@
 
         <HBox fx:id="streakRow" spacing="16"/>
 
-        <HBox spacing="16">
+        <HBox fx:id="chartRow" spacing="16">
             <VBox fx:id="pieChartContainer" spacing="8" styleClass="card" HBox.hgrow="ALWAYS">
                 <Label text="Solved vs. Unsolved" styleClass="section-title-inline"/>
             </VBox>

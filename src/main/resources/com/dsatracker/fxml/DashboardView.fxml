@@ -21,7 +21,7 @@
             <Label text="Your DSA practice at a glance." styleClass="page-subtitle"/>
         </VBox>
 
-        <VBox spacing="12" styleClass="card" maxWidth="700">
+        <VBox spacing="12" styleClass="card">
             <Label text="Profile" styleClass="section-title"/>
             <Label text="Your personal details, shown only to you on this device." styleClass="page-subtitle" wrapText="true"/>
             <HBox spacing="24">
@@ -49,18 +49,15 @@
             <HBox fx:id="difficultyRow" spacing="16"/>
         </VBox>
 
-        <HBox spacing="16">
+        <HBox fx:id="goalActivityRow" spacing="16">
             <VBox fx:id="goalContainer" HBox.hgrow="ALWAYS" spacing="12"/>
-            <VBox HBox.hgrow="ALWAYS" spacing="8" styleClass="card">
+            <VBox fx:id="recentActivityCard" HBox.hgrow="ALWAYS" spacing="8" styleClass="card" alignment="CENTER_LEFT">
                 <Label text="Recent Activity" styleClass="section-title-inline"/>
-                <StackPane fx:id="activityTrendContainer" alignment="CENTER_LEFT"/>
-                <VBox fx:id="recentActivityList" spacing="6"/>
-                <Label fx:id="recentActivityEmptyLabel" text="No solved problems yet - go solve one!"
-                       styleClass="subtitle-label" managed="false" visible="false" wrapText="true"/>
+                <StackPane fx:id="activityTrendContainer" alignment="CENTER_LEFT" VBox.vgrow="ALWAYS"/>
             </VBox>
         </HBox>
 
-        <VBox spacing="12" styleClass="card" maxWidth="900">
+        <VBox spacing="12" styleClass="card">
             <HBox alignment="CENTER_LEFT" spacing="12">
                 <VBox spacing="4" HBox.hgrow="ALWAYS">
                     <Label text="Diary" styleClass="section-title"/>

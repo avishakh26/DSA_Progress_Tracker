@@ -9,6 +9,7 @@ import com.dsatracker.service.TopicProgress;
 import com.dsatracker.service.TopicService;
 import com.dsatracker.view.HeatmapCell;
 import com.dsatracker.view.StatCard;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -45,6 +46,9 @@ public final class AnalyticsController implements Refreshable {
     private HBox streakRow;
 
     @FXML
+    private HBox chartRow;
+
+    @FXML
     private VBox pieChartContainer;
 
     @FXML
@@ -65,6 +69,14 @@ public final class AnalyticsController implements Refreshable {
 
     @FXML
     private void initialize() {
+        // HBox.hgrow="ALWAYS" alone doesn't make these two cards equal width - it only splits
+        // whatever's left over AFTER each child's own (differently-sized) preferred width, so
+        // the pie chart and bar chart cards can end up visibly different widths. Binding both
+        // to an explicit half of the row's width guarantees an even 50/50 split.
+        pieChartContainer.prefWidthProperty().bind(Bindings.createDoubleBinding(
+                () -> (chartRow.getWidth() - chartRow.getSpacing()) / 2, chartRow.widthProperty()));
+        barChartContainer.prefWidthProperty().bind(Bindings.createDoubleBinding(
+                () -> (chartRow.getWidth() - chartRow.getSpacing()) / 2, chartRow.widthProperty()));
         refresh();
     }
 

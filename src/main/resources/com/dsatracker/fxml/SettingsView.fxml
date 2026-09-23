@@ -29,7 +29,7 @@
             </HBox>
         </VBox>
 
-        <VBox spacing="12" styleClass="card" maxWidth="480">
+        <VBox spacing="12" styleClass="card" maxWidth="620">
             <Label text="Data Management" styleClass="section-title"/>
             <Label text="These actions affect every topic, problem, note and goal in the database."
                    styleClass="page-subtitle" wrapText="true"/>

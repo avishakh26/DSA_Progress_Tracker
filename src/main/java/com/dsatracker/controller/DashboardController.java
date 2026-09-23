@@ -73,16 +73,16 @@ public final class DashboardController implements Refreshable {
     private HBox difficultyRow;
 
     @FXML
+    private HBox goalActivityRow;
+
+    @FXML
     private VBox goalContainer;
 
     @FXML
+    private VBox recentActivityCard;
+
+    @FXML
     private StackPane activityTrendContainer;
-
-    @FXML
-    private VBox recentActivityList;
-
-    @FXML
-    private Label recentActivityEmptyLabel;
 
     @FXML
     private FlowPane diaryPreviewGrid;
@@ -108,6 +108,17 @@ public final class DashboardController implements Refreshable {
                 () -> scrollPane.getViewportBounds().getWidth(), scrollPane.viewportBoundsProperty()));
         diaryPreviewGrid.prefWrapLengthProperty().bind(Bindings.createDoubleBinding(
                 () -> scrollPane.getViewportBounds().getWidth(), scrollPane.viewportBoundsProperty()));
+        // HBox.hgrow="ALWAYS" alone doesn't make these two cards equal width - it only splits
+        // whatever's left over AFTER each child's own (very different) preferred width, so the
+        // goal card - much less content than the activity card's sparkline/list - would end up
+        // visibly narrower. Binding both to an explicit half of the row's width guarantees an
+        // even 50/50 split regardless of either card's content.
+        goalContainer.prefWidthProperty().bind(Bindings.createDoubleBinding(
+                () -> (goalActivityRow.getWidth() - goalActivityRow.getSpacing()) / 2,
+                goalActivityRow.widthProperty()));
+        recentActivityCard.prefWidthProperty().bind(Bindings.createDoubleBinding(
+                () -> (goalActivityRow.getWidth() - goalActivityRow.getSpacing()) / 2,
+                goalActivityRow.widthProperty()));
         refresh();
     }
 
@@ -118,7 +129,6 @@ public final class DashboardController implements Refreshable {
         renderStatCards(stats);
         renderDifficultyBreakdown(stats);
         renderGoalCard(stats.todayGoal());
-        renderRecentActivity(stats.recentActivity());
         renderActivityTrend(stats.activityTrend());
         renderDiaryPreview();
     }
@@ -227,18 +237,6 @@ public final class DashboardController implements Refreshable {
             card.update(fraction, goal.actualCount() + " / " + target + " problems solved today");
         }
         goalContainer.getChildren().setAll(card);
-    }
-
-    private void renderRecentActivity(final List<String> recentActivity) {
-        recentActivityEmptyLabel.setManaged(recentActivity.isEmpty());
-        recentActivityEmptyLabel.setVisible(recentActivity.isEmpty());
-
-        recentActivityList.getChildren().clear();
-        for (final String entry : recentActivity) {
-            final Label label = new Label(entry);
-            label.getStyleClass().add("activity-item");
-            recentActivityList.getChildren().add(label);
-        }
     }
 
     private String formatPercent(final double percent) {
