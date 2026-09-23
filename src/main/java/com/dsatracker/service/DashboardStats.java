@@ -16,6 +16,7 @@ public record DashboardStats(
         int mediumSolved,
         int hardSolved,
         List<String> recentActivity,
+        List<Integer> activityTrend,
         GoalProgress todayGoal
 ) {
 }

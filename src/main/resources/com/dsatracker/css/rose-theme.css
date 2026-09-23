@@ -212,6 +212,20 @@
     -fx-text-fill: -fx-text-secondary;
 }
 
+.sparkline-line {
+    -fx-stroke: -fx-success;
+    -fx-stroke-width: 2;
+    -fx-fill: null;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+.sparkline-area {
+    -fx-fill: -fx-success;
+    -fx-stroke: null;
+    -fx-opacity: 0.15;
+}
+
 /* ----- Profile avatar (Settings) -------------------------------------------- */
 .profile-avatar {
     -fx-stroke: -fx-border-subtle;

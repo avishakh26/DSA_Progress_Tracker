@@ -5,12 +5,14 @@ import com.dsatracker.ThemeManager.Theme;
 import com.dsatracker.service.SettingsService;
 import com.dsatracker.util.AlertHelper;
 import javafx.fxml.FXML;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -46,6 +48,9 @@ public final class SettingsController implements Refreshable {
     @FXML
     private HBox themeRow;
 
+    @FXML
+    private ColorPicker accentColorPicker;
+
     public SettingsController(final SettingsService settingsService, final ThemeManager themeManager) {
         this.settingsService = settingsService;
         this.themeManager = themeManager;
@@ -60,6 +65,7 @@ public final class SettingsController implements Refreshable {
     public void refresh() {
         themeGroup.getToggles().clear();
         themeRow.getChildren().setAll(Arrays.stream(Theme.values()).map(this::buildThemeOption).toList());
+        accentColorPicker.setValue(Color.web(themeManager.getEffectiveAccentHex()));
     }
 
     private ToggleButton buildThemeOption(final Theme theme) {
@@ -84,6 +90,10 @@ public final class SettingsController implements Refreshable {
         option.setOnAction(event -> {
             if (option.isSelected()) {
                 themeManager.setTheme(theme);
+                // A custom accent survives the switch (ThemeManager keeps applying it over
+                // whichever theme is active); only the swatch preview needs to catch up if
+                // the user hasn't overridden it, since the "default" accent changed with it.
+                accentColorPicker.setValue(Color.web(themeManager.getEffectiveAccentHex()));
             } else {
                 // Keep exactly one theme selected at all times - clicking the already-active
                 // swatch would otherwise deselect it and leave the picker showing nothing chosen.
@@ -91,6 +101,17 @@ public final class SettingsController implements Refreshable {
             }
         });
         return option;
+    }
+
+    @FXML
+    private void onAccentColorChanged() {
+        themeManager.setAccentColor(accentColorPicker.getValue());
+    }
+
+    @FXML
+    private void onResetAccentColor() {
+        themeManager.resetAccentColor();
+        accentColorPicker.setValue(Color.web(themeManager.getEffectiveAccentHex()));
     }
 
     // ----- Data management -----------------------------------------------------------------------

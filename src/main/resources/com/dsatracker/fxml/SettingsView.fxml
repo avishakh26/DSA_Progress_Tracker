@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
@@ -20,6 +21,12 @@
             <Label text="Appearance" styleClass="section-title"/>
             <Label text="Choose the theme used across the whole app." styleClass="page-subtitle" wrapText="true"/>
             <HBox fx:id="themeRow" spacing="12"/>
+
+            <Label text="Or pick your own accent color." styleClass="page-subtitle" wrapText="true"/>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <ColorPicker fx:id="accentColorPicker" onAction="#onAccentColorChanged"/>
+                <Button text="Reset to Theme Default" onAction="#onResetAccentColor"/>
+            </HBox>
         </VBox>
 
         <VBox spacing="12" styleClass="card" maxWidth="480">

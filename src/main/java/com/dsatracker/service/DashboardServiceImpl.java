@@ -9,6 +9,8 @@ import com.dsatracker.model.enums.TopicStatus;
 import com.dsatracker.repository.ProblemRepository;
 import com.dsatracker.repository.TopicRepository;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public final class DashboardServiceImpl implements DashboardService {
 
     private static final int RECENT_ACTIVITY_LIMIT = 5;
+    private static final int ACTIVITY_TREND_DAYS = 14;
 
     private final TopicRepository topicRepository;
     private final ProblemRepository problemRepository;
@@ -68,7 +71,14 @@ public final class DashboardServiceImpl implements DashboardService {
                 countSolvedByDifficulty(problems, Difficulty.MEDIUM),
                 countSolvedByDifficulty(problems, Difficulty.HARD),
                 recentActivity,
+                activityTrend(),
                 goalService.getTodayProgress(GoalType.DAILY).orElse(null));
+    }
+
+    private List<Integer> activityTrend() {
+        final LocalDate end = LocalDate.now();
+        final LocalDate start = end.minusDays(ACTIVITY_TREND_DAYS - 1);
+        return new ArrayList<>(activityService.getHeatmapData(start, end).values());
     }
 
     private int countSolvedByDifficulty(final List<Problem> problems, final Difficulty difficulty) {

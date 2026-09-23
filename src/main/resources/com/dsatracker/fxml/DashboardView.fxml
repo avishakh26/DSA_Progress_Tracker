@@ -53,6 +53,7 @@
             <VBox fx:id="goalContainer" HBox.hgrow="ALWAYS" spacing="12"/>
             <VBox HBox.hgrow="ALWAYS" spacing="8" styleClass="card">
                 <Label text="Recent Activity" styleClass="section-title-inline"/>
+                <StackPane fx:id="activityTrendContainer" alignment="CENTER_LEFT"/>
                 <VBox fx:id="recentActivityList" spacing="6"/>
                 <Label fx:id="recentActivityEmptyLabel" text="No solved problems yet - go solve one!"
                        styleClass="subtitle-label" managed="false" visible="false" wrapText="true"/>

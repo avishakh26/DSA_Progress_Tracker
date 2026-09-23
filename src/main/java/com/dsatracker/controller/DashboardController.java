@@ -11,6 +11,7 @@ import com.dsatracker.service.ProfileService;
 import com.dsatracker.util.AlertHelper;
 import com.dsatracker.view.DiaryEntryCard;
 import com.dsatracker.view.ProgressCard;
+import com.dsatracker.view.Sparkline;
 import com.dsatracker.view.StatCard;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
@@ -75,6 +76,9 @@ public final class DashboardController implements Refreshable {
     private VBox goalContainer;
 
     @FXML
+    private StackPane activityTrendContainer;
+
+    @FXML
     private VBox recentActivityList;
 
     @FXML
@@ -115,6 +119,7 @@ public final class DashboardController implements Refreshable {
         renderDifficultyBreakdown(stats);
         renderGoalCard(stats.todayGoal());
         renderRecentActivity(stats.recentActivity());
+        renderActivityTrend(stats.activityTrend());
         renderDiaryPreview();
     }
 
@@ -238,6 +243,10 @@ public final class DashboardController implements Refreshable {
 
     private String formatPercent(final double percent) {
         return String.format(Locale.US, "%.0f%%", percent);
+    }
+
+    private void renderActivityTrend(final List<Integer> activityTrend) {
+        activityTrendContainer.getChildren().setAll(new Sparkline(activityTrend));
     }
 
     // ----- Diary preview ---------------------------------------------------------------------------
