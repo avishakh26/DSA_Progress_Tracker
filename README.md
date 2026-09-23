@@ -11,11 +11,14 @@ visualise progress with charts and a contribution heatmap.
 ## Download & use (Windows — no Java needed)
 
 1. Open the **[latest release](https://github.com/avishakh26/DSA_Progress_Tracker/releases/latest)**
-   and download `DSA-Progress-Tracker-vX.Y.Z-windows.zip` (under *Assets*).
-2. **Right-click the zip → Extract All.** Don't run it from inside the zip.
-3. Open the extracted `DSA Progress Tracker` folder and double-click **`DSA Progress Tracker.exe`**.
-4. On the first launch the app **creates a "DSA Progress Tracker" shortcut on your Desktop** for you.
-   After that you can launch it from there (it's only created once — deleting it later is fine).
+   and download **`DSA-Progress-Tracker-Setup-X.Y.Z.exe`** (under *Assets*).
+2. Double-click it and follow the installer (Next → Install). No admin rights or Java needed.
+3. That's it — the installer puts a **"DSA Progress Tracker" shortcut on your Desktop** and in the
+   Start Menu. Double-click it to start the app. To uninstall: *Settings → Apps → DSA Progress Tracker*.
+
+Prefer no installer? Download `DSA-Progress-Tracker-vX.Y.Z-portable-windows.zip` instead, right-click →
+*Extract All*, and run `DSA Progress Tracker.exe` from the extracted folder (it creates the Desktop
+shortcut itself the first time it runs).
 
 **First launch**
 - Windows SmartScreen may say *"Windows protected your PC"* because the app isn't code-signed.
@@ -27,20 +30,20 @@ visualise progress with charts and a contribution heatmap.
 **Your data & updates**
 - Everything is stored offline on your PC in `%USERPROFILE%\.dsa-tracker`, outside the app folder.
 - When a newer release exists, a banner appears at the top of the app with a **Download** button.
-  To update: download the new zip, extract it, and use the new folder. Your data carries over
-  automatically. You can then delete the old folder.
-- To uninstall, delete the app folder (and `%USERPROFILE%\.dsa-tracker` if you also want your data gone).
+  To update, just run the new installer — it upgrades in place and your data carries over.
+  (Portable zip: extract the new one and use the new folder.)
+- Uninstalling the app keeps your data; delete `%USERPROFILE%\.dsa-tracker` too if you want it gone.
 
-Requires 64-bit Windows 10/11. Build the exe yourself (needs a JDK 17+):
+Requires 64-bit Windows 10/11. Build it yourself (needs a JDK 17+; add `-Installer` for the Setup exe, which also needs WiX 3):
 `powershell -ExecutionPolicy Bypass -File package-exe.ps1`.
 
 ### Publishing a new version (maintainer)
 
-Raise `APP_VERSION` in `AppConstants.java`, commit, then push a tag — GitHub Actions builds and publishes the release:
+Raise `APP_VERSION` in `AppConstants.java`, commit, then push a tag — GitHub Actions builds the installer and portable zip and publishes the release:
 
 ```bash
-git tag v1.0.1
-git push origin v1.0.1
+git tag v1.0.2
+git push origin v1.0.2
 ```
 
 ---
