@@ -122,8 +122,9 @@ one layer each.
 opens one or runs a raw script — every other read/write goes through a repository using
 `PreparedStatement`. On startup it creates `data/dsa_tracker.db` if missing, enables
 `PRAGMA foreign_keys` (off by default in SQLite) and WAL mode, then re-runs `sql/schema.sql`
-(idempotent — every statement is `IF NOT EXISTS`) and, only the first time `topics` is empty,
-`sql/seed.sql` with a 6-phase / 17-topic sample roadmap and a few solved/attempted problems.
+(idempotent — every statement is `IF NOT EXISTS`). Only when the database file is brand new does it
+run `sql/roadmap.sql` (the 6-phase / 17-topic roadmap). `sql/seed.sql` (sample problems, notes, a goal)
+runs only from *Settings → Restore Sample Data* and in tests.
 
 ```
 topics(id, name, description, phase, difficulty, status)
